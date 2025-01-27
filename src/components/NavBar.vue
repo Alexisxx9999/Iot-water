@@ -39,11 +39,11 @@
         </ol>
       </aside>
     </div>
+    
+    <main class="main-content">
+      <!-- Aquí va el contenido de la vista -->
+    </main>
   </div>
-  
-  <main class="main-content">
-    <!-- Aquí va el contenido de la vista -->
-  </main>
 </template>
 
 <script>
@@ -147,6 +147,7 @@ export default {
 .content-total {
   display: flex;
   height: 100vh; /* Asegurarse de que ocupa toda la altura de la ventana */
+  margin-top: 40px; /* Para evitar que el contenido se superponga a la barra de navegación */
 }
 
 .side-menu {
@@ -156,7 +157,7 @@ export default {
   background: rgb(0, 26, 49);
   position: fixed;
   z-index: 100;
-  height: 100%;
+  height: calc(100vh - 40px); /* Altura total menos la altura de la barra de navegación */
   display: flex;
   flex-direction: column;
 }
