@@ -1,41 +1,39 @@
 <template>
-  <h1>Bienvenido a Pet Pocket</h1>
-  <p>Una herramienta para gestión de veterinarios</p>
+  <h1>Bienvenido a Iot water <em>username</em></h1>
+  <p>Accesos directos y Estadisticas</p>
   <div class="card-container">
     <Card
-      title="Total Usuarios"
+      title="Medidores Activos"
       :value="totalUsuarios"
-      icon="fas fa-user-circle"
-      bgColorClass="bg-orange"
-      enlace="dashboard/usuarios"
+      icon="fas fa-tachometer-alt"
+      bgColorClass="bg-white"
+      enlace="dashboard/medidor"
     />
     <Card
-      title="Total de Mascotas"
+      title="Gateways Activos "
       :value="totalMascotas"
-      icon="fa-solid fa-dog"
-      bgColorClass="bg-light-orange"
-      enlace="dashboard/mascotas"
+      icon="fas fa-plug"
+      bgColorClass="bg-white"
+      enlace="dashboard/gateway"
     />
     <Card
-      title="Total Vacunas"
+      title="Usuarios"
       :value="totalVacunas"
-      icon="fa-solid fa-syringe"
-      bgColorClass="bg-brown"
-      enlace="dashboard/vacunas"
+      icon="fas fa-users"
+      bgColorClass="bg-white"
+      enlace="dashboard/usuario"
     />
     <Card
-      title="Total Adopciones"
+      title="Clientes"
       :value="totalAdopciones"
-      icon="fa-solid fa-shield-dog"
-      bgColorClass="bg-yellow"
-      enlace="dashboard/adopciones"
+      icon="fas fa-users"
+      bgColorClass="bg-bg-white"
+      enlace="dashboard/cliente"
     />
   </div>
 
-  <h3>Usuarios y Mascotas registradas</h3>
+  <h3>Estadisticas de Agua por mes</h3>
   <canvas ref="lineChart" class="estadistica"> </canvas>
-  <h3>tipos de mascotas</h3>
-  <canvas ref="barChart" class="estadistica"></canvas>
 </template>
 
 <script>
@@ -227,8 +225,8 @@ export default {
 }
 h3 {
   width: 94%;
-  background-color: orange;
-  color: white;
+
+  color: #333;
   margin: auto;
   text-align: center;
   padding: 10px;

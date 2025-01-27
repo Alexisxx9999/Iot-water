@@ -4,6 +4,7 @@
       <router-link to="/dashboard">
         <div class="logo">
           <img src="../assets/logo.png" alt="Logo" />
+          <span class="logo-name">IOT WATER</span>
         </div>
       </router-link>
 
@@ -40,86 +41,32 @@
           </li>
           <li>
             <a href="#"
-              ><router-link to="/dashboard/añadir-gateway"
-                ><i class="fas fa-plug"></i>Añadir Gateway</router-link
+              ><router-link to="/dashboard/gateway"
+                ><i class="fas fa-plug"></i>gateway
+              </router-link></a
+            >
+          </li>
+
+          <li>
+            <a href="#"
+              ><router-link to="/dashboard/usuario"
+                ><i class="fas fa-user-plus"></i> Usuario</router-link
               ></a
             >
           </li>
+
           <li>
             <a href="#"
-              ><router-link to="/dashboard/editar-gateway"
-                ><i class="fas fa-edit"></i>Editar Gateway</router-link
+              ><router-link to="/dashboard/medidor"
+                ><i class="fas fa-tachometer-alt"></i> Medidor</router-link
               ></a
             >
           </li>
+
           <li>
             <a href="#"
-              ><router-link to="/dashboard/detalle-gateway"
-                ><i class="fas fa-info-circle"></i>Detalle Gateway</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/añadir-usuario"
-                ><i class="fas fa-user-plus"></i>Añadir Usuario</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/editar-usuario"
-                ><i class="fas fa-user-edit"></i>Editar Usuario</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/ver-usuario"
-                ><i class="fas fa-users"></i>Ver Usuario</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/añadir-medidor"
-                ><i class="fas fa-tachometer-alt"></i>Añadir
-                Medidor</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/editar-medidor"
-                ><i class="fas fa-edit"></i>Editar Medidor</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/ver-medidor"
-                ><i class="fas fa-eye"></i>Ver Medidor</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/añadir-cliente"
-                ><i class="fas fa-user-plus"></i>Añadir Cliente</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/editar-cliente"
-                ><i class="fas fa-user-edit"></i>Editar Cliente</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/detalle-cliente"
-                ><i class="fas fa-info-circle"></i>Detalle Cliente</router-link
+              ><router-link to="/dashboard/cliente"
+                ><i class="fas fa-user-plus"></i> Cliente</router-link
               ></a
             >
           </li>

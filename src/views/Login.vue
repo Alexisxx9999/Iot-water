@@ -2,11 +2,11 @@
   <div class="login-container">
     <div class="login-form">
       <div class="login-image">
-        <img src="../assets/mascota1.jpg" alt="" />
+        <img src="../assets/logo.png" alt="" />
       </div>
       <div class="login-fields">
-        <img src="../assets/logo.png" class="img" alt="" />
         <form @submit.prevent="login">
+          <h2>Bienvenido</h2>
           <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" v-model="email" required />
@@ -18,7 +18,7 @@
 
           <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
         </form>
-        <p>
+        <p class="register">
           No tienes una cuenta aun ?
           <router-link to="/register">Registrate</router-link>
         </p>
@@ -78,6 +78,8 @@ export default {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   padding: 20px;
   box-sizing: border-box;
+  color: white;
+  background-color: #c4e2fe;
 }
 .img {
   padding: 10px;
@@ -88,10 +90,12 @@ export default {
 .login-container a {
   text-decoration: none;
 }
-
+.register a {
+  color: skyblue;
+}
 .login-form {
   display: flex;
-  background-color: white;
+  background-color: #233a63;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: hidden;
@@ -139,7 +143,7 @@ export default {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #f7a518;
+  background-color: #0369f0;
   border: none;
   color: white;
   font-size: 16px;
@@ -149,7 +153,7 @@ export default {
 }
 
 .btn:hover {
-  background-color: #e69617;
+  background-color: #61c2f0;
 }
 
 .login-fields h1 {

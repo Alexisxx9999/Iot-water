@@ -2,11 +2,10 @@
   <div class="signup-container">
     <div class="signup-form">
       <div class="signup-image">
-        <img src="../assets/mascota2.jpg" alt="Pet Image" />
+        <img src="../assets/logo.png" alt="Pet Image" />
       </div>
       <div class="signup-fields">
-        <img src="../assets/logo.png" class="img" alt="" />
-        <p>Crea una cuenta en pet pocket</p>
+        <p>Crea una cuenta en Iot Water</p>
         <form @submit.prevent="createUsers">
           <div class="form-group">
             <label for="name">Nombres</label>
@@ -18,16 +17,7 @@
               required
             />
           </div>
-          <div class="form-group">
-            <label for="apellidoUsuario">Apellidos</label>
-            <input
-              type="text"
-              id="apellidoUsuario"
-              v-model="user.apellidoUsuario"
-              name="apellidoUsuario"
-              required
-            />
-          </div>
+
           <div class="form-group">
             <label for="emailUsuario">Email</label>
             <input
@@ -40,18 +30,7 @@
               title="Por favor, ingresa un correo electrónico válido"
             />
           </div>
-          <div class="form-group">
-            <label for="cedulaUsuario">Cédula</label>
-            <input
-              type="text"
-              id="cedulaUsuario"
-              v-model="user.cedulaUsuario"
-              name="cedulaUsuario"
-              required
-              pattern="\d{10}"
-              title="La cédula debe contener exactamente 10 dígitos numéricos"
-            />
-          </div>
+
           <div class="form-group">
             <label for="telefonoUsuario">Teléfono</label>
             <input
@@ -150,19 +129,20 @@ export default {
 <style scoped>
 .signup-container {
   display: flex;
-  width: 90%;
-  height: 100vh;
+  width: 100%;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  height: 100%;
   padding: 20px;
   box-sizing: border-box;
+  color: white;
+  font-size: 20px;
 }
 
 .signup-form {
   display: flex;
-  background-color: white;
+  background-color: #233a63;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: hidden;
@@ -171,6 +151,9 @@ export default {
 }
 .signup-form a {
   text-decoration: none;
+}
+.signup-form a {
+  color: skyblue;
 }
 .signup-image {
   flex: 1;
@@ -218,7 +201,7 @@ export default {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #f7a518;
+  background-color: #0369f0;
   border: none;
   color: white;
   font-size: 16px;
@@ -227,7 +210,7 @@ export default {
 }
 
 .btn:hover {
-  background-color: #e69617;
+  background-color: #61c2f0;
 }
 
 .signup-fields h1 {

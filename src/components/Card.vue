@@ -53,8 +53,8 @@ export default {
   width: 23%;
   height: 150px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: white;
+  box-shadow: 5px 8px 8px rgba(0, 0, 0, 0.1);
+  color: black;
 }
 
 .card-content {
