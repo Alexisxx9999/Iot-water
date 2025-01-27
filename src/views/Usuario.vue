@@ -28,45 +28,22 @@
           </div>
           <!-- Apellido -->
           <div class="form-group">
-            <label for="apellido" class="title">Apellido</label>
-            <input
-              type="text"
-              id="apellido"
-              required
-              v-model="currentUsuario.apellido"
-              class="form-control"
-            />
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
           </div>
           <!-- Email -->
           <div class="form-group">
-            <label for="email" class="title">Email</label>
-            <input
-              type="email"
-              id="email"
-              required
-              v-model="currentUsuario.email"
-              class="form-control"
-            />
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
           </div>
           <!-- Teléfono -->
           <div class="form-group">
-            <label for="telefono" class="title">Teléfono</label>
-            <input
-              type="tel"
-              id="telefono"
-              v-model="currentUsuario.telefono"
-              class="form-control"
-            />
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
           </div>
-          <!-- Dirección -->
           <div class="form-group">
-            <label for="direccion" class="title">Dirección</label>
-            <input
-              type="text"
-              id="direccion"
-              v-model="currentUsuario.direccion"
-              class="form-control"
-            />
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
           </div>
           <!-- Botones de acción -->
           <div class="form-buttons">

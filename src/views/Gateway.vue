@@ -10,8 +10,37 @@
         <button @click="showAddForm" class="add-button">Añadir Gateway</button>
       </div>
     </div>
-
-    <!-- Tabla de Gateways -->
+    <div class="form-container" v-if="showForm">
+      <h2 class="title2">{{ editing ? "Editar " : "Agregar " }} adopcion 😸</h2>
+      <form @submit.prevent="submitForm" class="form-principal">
+        <div class="inf">
+          <div class="form-group">
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
+          </div>
+          <div class="form-group">
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
+          </div>
+          <div class="form-group">
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
+          </div>
+          <div class="form-group">
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
+          </div>
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">
+              {{ editing ? "Guardar" : "Agregar" }}
+            </button>
+            <button type="button" @click="cancelEdit" class="btn btn-secondary">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
     <div class="table-container">
       <table>
         <thead>

@@ -17,35 +17,23 @@
         <div class="inf">
           <!-- Nombre del Medidor -->
           <div class="form-group">
-            <label for="idMedidor" class="title">Nombre del Medidor</label>
-            <input
-              type="text"
-              name="idMedidor"
-              id="idMedidor"
-              required
-              v-model="currentMedidor.name"
-              class="form-control"
-            />
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
           </div>
           <!-- Ubicación -->
           <div class="form-group">
-            <label for="location" class="title">Ubicación</label>
-            <input
-              type="text"
-              id="location"
-              v-model="currentMedidor.location"
-              class="form-control"
-            />
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
           </div>
           <!-- Estado -->
           <div class="form-group">
-            <label for="status" class="title">Estado</label>
-            <select id="status" v-model="currentMedidor.status" class="form-control">
-              <option value="activo">Activo</option>
-              <option value="inactivo">Inactivo</option>
-            </select>
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
           </div>
-          <!-- Botones de acción -->
+          <div class="form-group">
+            <label for="idgateway" class="title">Información adicional</label>
+            <input type="text" id="idgateway" />
+          </div>
           <div class="form-buttons">
             <button type="submit" class="btn btn-primary">
               {{ editing ? "Guardar" : "Agregar" }}
