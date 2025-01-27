@@ -1,17 +1,15 @@
 <template>
   <div class="content-total">
     <nav class="nav-bar">
-      <router-link to="/dashboard">
-        <div class="logo">
-          <img src="../assets/logo.png" alt="Logo" />
-          <span class="logo-name">IOT WATER</span>
-        </div>
+      <router-link to="/dashboard" class="logo">
+        <img src="../assets/logo.png" alt="Logo" />
+        <span class="logo-name">IOT WATER</span>
       </router-link>
 
-      <nav>
+      <div class="user-menu">
         <ul class="menu-horizontal">
           <li>
-            <a href="#">
+            <a href="#" class="user-link">
               <i class="fas fa-user-circle"></i>
               <span class="nav-text">{{ userName }}</span>
             </a>
@@ -24,12 +22,15 @@
             </ul>
           </li>
         </ul>
-      </nav>
+      </div>
     </nav>
 
-    <div class="sidebar">
+    <button class="toggle-sidebar" @click="toggleSidebar">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar" :class="{ 'is-hidden': !isSidebarVisible }">
       <aside class="side-menu">
-        <div class="profile-info"></div>
         <ol class="Navbar">
           <li v-for="item in menuItems" :key="item.path">
             <router-link :to="item.path">
@@ -39,10 +40,6 @@
         </ol>
       </aside>
     </div>
-    
-    <main class="main-content">
-      <!-- Aquí va el contenido de la vista -->
-    </main>
   </div>
 </template>
 
@@ -59,7 +56,13 @@ export default {
         { name: "Medidor", path: "/dashboard/medidor", icon: "fas fa-tachometer-alt" },
         { name: "Cliente", path: "/dashboard/cliente", icon: "fas fa-user-plus" },
       ],
+      isSidebarVisible: true, // Controla la visibilidad de la barra lateral
     };
+  },
+  methods: {
+    toggleSidebar() {
+      this.isSidebarVisible = !this.isSidebarVisible; // Alternar visibilidad
+    },
   },
 };
 </script>
@@ -70,25 +73,41 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px;
+  padding: 5px 10px; /* Espaciado ajustado */
   background-color: #fff;
   border-bottom: 1px solid #ccc;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 40px; /* Ajustar la altura para que sea más delgada */
+  height: 60px; /* Altura ajustada */
   z-index: 1000;
+  transition: background-color 0.3s; /* Animación al cambiar el color de fondo */
+}
+
+.nav-bar:hover {
+  background-color: rgba(240, 240, 240, 0.9); /* Cambia el fondo al pasar el cursor */
 }
 
 .logo {
   display: flex;
   align-items: center;
+  transition: transform 0.3s, opacity 0.3s; /* Animación para el logo */
+}
+
+.logo:hover {
+  transform: scale(1.1); /* Aumenta el tamaño del logo al pasar el cursor */
+  opacity: 0.9; /* Cambia la opacidad del logo al pasar el cursor */
 }
 
 .logo img {
-  height: 35px; /* Ajustar el tamaño del logo */
+  height: 40px; /* Ajustar el tamaño del logo */
   margin-right: 5px;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
 }
 
 .menu-horizontal {
@@ -97,20 +116,26 @@ export default {
   align-items: center;
 }
 
+.menu-horizontal > li {
+  position: relative; /* Para el menú vertical */
+}
+
 .menu-horizontal > li > a {
   display: flex;
   align-items: center;
   padding: 10px 15px;
   color: black;
   text-decoration: none;
+  transition: color 0.3s, transform 0.2s; /* Animación de color y transformación */
 }
 
-.menu-horizontal > li > a .nav-text {
-  margin-left: 5px;
+.menu-horizontal > li > a:hover {
+  color: #007bff; /* Cambia el color al pasar el cursor */
+  transform: scale(1.05); /* Efecto de aumento al pasar el cursor */
 }
 
-.menu-horizontal > li:hover {
-  background-color: rgba(6, 25, 100, 0.5);
+.menu-horizontal > li:hover .menu-vertical {
+  display: block;
 }
 
 .menu-vertical {
@@ -119,10 +144,8 @@ export default {
   list-style: none;
   width: 163px;
   background-color: rgba(169, 169, 169, 0.5);
-}
-
-.menu-horizontal li:hover .menu-vertical {
-  display: block;
+  z-index: 100; /* Asegúrate que esté sobre otros elementos */
+  transition: opacity 0.3s; /* Animación de opacidad */
 }
 
 .menu-vertical li:hover {
@@ -149,40 +172,47 @@ export default {
   height: 100vh; /* Asegurarse de que ocupa toda la altura de la ventana */
 }
 
-.side-menu {
-  width: 100%;
-  min-width: 15%;
-  max-width: 220px;
+.toggle-sidebar {
+  display: none; /* Ocultar el botón en pantallas grandes */
+}
+
+.sidebar {
+  width: 200px; /* Ancho más espacioso para la barra lateral */
   background: rgb(0, 26, 49);
   position: fixed;
   z-index: 100;
-  height: calc(100vh - 40px); /* Altura total menos la altura de la barra de navegación */
+  height: 100vh; /* Altura total de la barra lateral */
   display: flex;
   flex-direction: column;
-  top: 40px; /* Alinear con la barra de navegación */
+  top: 60px; /* Alinear con la barra de navegación */
+  transition: transform 0.3s ease; /* Transición suave */
+}
+
+.sidebar.is-hidden {
+  transform: translateX(-100%); /* Desaparece hacia la izquierda */
 }
 
 .sidebar .Navbar {
   width: 100%;
-  padding: 0 10px;
+  padding: 0;
   list-style: none;
-  margin-top: 10px; /* Reducir el espacio superior */
 }
 
 .sidebar .Navbar li {
   width: 100%;
-  display: inline-flex;
+  display: flex;
   margin: 5px 0;
 }
 
 .sidebar .Navbar li a {
   width: 100%;
-  display: inline-flex;
+  display: flex;
   text-decoration: none;
-  text-transform: capitalize;
   color: white;
-  padding: 5px 8px;
+  padding: 10px 15px;
   border-radius: 10px;
+  align-items: center;
+  transition: background 0.3s, color 0.3s; /* Animación de fondo y color */
 }
 
 .sidebar .Navbar li:hover a {
@@ -191,24 +221,18 @@ export default {
 }
 
 .sidebar .Navbar li a i {
-  margin: auto 0;
-  font-size: 20px;
-  width: 40px;
-  text-align: center;
+  margin-right: 5px; /* Espacio entre el icono y el texto */
 }
 
 .sidebar .Navbar li a p {
-  font-size: 20px;
-  transform: scale(1);
-  transform-origin: left;
-  transition: 0.3s;
+  font-size: 14px; /* Ajustar el tamaño de la fuente */
 }
 
 /* Estilos para el contenido principal */
 .main-content {
-  margin-left: 220px; /* Espacio para la barra lateral */
+  margin-left: 200px; /* Espacio para la barra lateral más ancha */
   padding: 20px;
-  margin-top: 0; /* Sin margen superior para que el contenido esté alineado */
+  margin-top: 60px; /* Alinear el contenido más abajo, por debajo de la barra de navegación */
 }
 
 /* Estilos responsivos */
@@ -222,28 +246,34 @@ export default {
     flex-direction: column; /* Cambiar a columna para dispositivos pequeños */
   }
 
-  .side-menu {
-    position: relative;
-    width: 100%;
-    height: auto;
-    min-width: 100%;
-    max-width: 100%;
-    transition: none; /* Desactivar la transición */
-    margin-top: 0; /* Sin margen superior para móviles */
+  .toggle-sidebar {
+    display: block; /* Mostrar botón en pantallas pequeñas */
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: black;
+    cursor: pointer;
+    margin: 5px;
   }
 
   .sidebar {
+    position: fixed; /* Mantener la barra lateral en posición fija */
     width: 100%;
     height: auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    transition: none; /* Desactivar la transición */
+    margin-top: 0; /* Sin margen superior para móviles */
+    top: 60px; /* Alinear con la barra de navegación */
+  }
+
+  .sidebar.is-hidden {
+    display: none; /* Ocultar la barra lateral */
   }
 
   .main-content {
     margin-left: 0; /* Sin margen para móviles */
     padding: 10px;
     height: auto; /* Ajustar altura para móviles */
+    margin-top: 60px; /* Alinear contenido con la barra de navegación */
   }
 }
 
@@ -262,7 +292,7 @@ export default {
   }
 
   .sidebar .Navbar li a {
-    font-size: 24px; /* Aumentar el tamaño de fuente en pantallas grandes */
+    font-size: 16px; /* Aumentar el tamaño de fuente en pantallas grandes */
   }
 }
 </style>
