@@ -13,14 +13,13 @@
           <li>
             <a href="#">
               <i class="fas fa-user-circle"></i>
-              <span class="nav-text">Usuario Admin</span>
+              <span class="nav-text">{{ userName }}</span>
             </a>
             <ul class="menu-vertical">
               <li>
-                <a href="#"
-                  ><i class="fas fa-sign-out-alt"></i
-                  ><router-link to="/">Cerrar sesión</router-link></a
-                >
+                <router-link to="/">
+                  <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                </router-link>
               </li>
             </ul>
           </li>
@@ -30,56 +29,38 @@
 
     <div class="sidebar">
       <aside class="side-menu">
-        <div class="profile-info"><br /><br /><br /></div>
+        <div class="profile-info"></div>
         <ol class="Navbar">
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard"
-                ><i class="fas fa-tv"></i>Dashboard</router-link
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/gateway"
-                ><i class="fas fa-plug"></i>gateway
-              </router-link></a
-            >
-          </li>
-
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/usuario"
-                ><i class="fas fa-user-plus"></i> Usuario</router-link
-              ></a
-            >
-          </li>
-
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/medidor"
-                ><i class="fas fa-tachometer-alt"></i> Medidor</router-link
-              ></a
-            >
-          </li>
-
-          <li>
-            <a href="#"
-              ><router-link to="/dashboard/cliente"
-                ><i class="fas fa-user-plus"></i> Cliente</router-link
-              ></a
-            >
+          <li v-for="item in menuItems" :key="item.path">
+            <router-link :to="item.path">
+              <i :class="item.icon"></i> {{ item.name }}
+            </router-link>
           </li>
         </ol>
       </aside>
     </div>
   </div>
-  <main class="main-content"></main>
+  
+  <main class="main-content">
+    <!-- Aquí va el contenido de la vista -->
+  </main>
 </template>
 
 <script>
 export default {
   name: "NavBar",
+  data() {
+    return {
+      userName: "Usuario Admin",
+      menuItems: [
+        { name: "Dashboard", path: "/dashboard", icon: "fas fa-tv" },
+        { name: "Gateway", path: "/dashboard/gateway", icon: "fas fa-plug" },
+        { name: "Usuario", path: "/dashboard/usuario", icon: "fas fa-user-plus" },
+        { name: "Medidor", path: "/dashboard/medidor", icon: "fas fa-tachometer-alt" },
+        { name: "Cliente", path: "/dashboard/cliente", icon: "fas fa-user-plus" },
+      ],
+    };
+  },
 };
 </script>
 
@@ -89,14 +70,14 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 5px;
+  padding: 5px;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 50px;
+  height: 40px; /* Ajustar la altura para que sea más delgada */
   z-index: 1000;
 }
 
@@ -106,32 +87,30 @@ export default {
 }
 
 .logo img {
-  height: 40px;
-  margin-right: 10px;
+  height: 35px; /* Ajustar el tamaño del logo */
+  margin-right: 5px;
 }
 
 .menu-horizontal {
   list-style: none;
   display: flex;
   align-items: center;
-  justify-content: center; /* Centrar los elementos horizontalmente */
-  flex: 1; /* Permitir que el menú horizontal ocupe el espacio disponible */
 }
 
 .menu-horizontal > li > a {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 10px 15px;
   color: black;
   text-decoration: none;
 }
 
 .menu-horizontal > li > a .nav-text {
-  margin-left: 10px; /* Separación entre ícono y texto */
+  margin-left: 5px;
 }
 
 .menu-horizontal > li:hover {
-  background-color: rgba(169, 169, 169, 0.5);
+  background-color: rgba(6, 25, 100, 0.5);
 }
 
 .menu-vertical {
@@ -154,9 +133,8 @@ export default {
   display: flex;
   align-items: center;
   color: black;
-  padding: 15px 20px;
+  padding: 10px 15px;
   text-decoration: none;
-  height: 40px; /* Ajustar la altura de los elementos en el menú vertical */
 }
 
 /* Estilos del menú lateral */
@@ -166,38 +144,28 @@ export default {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
+.content-total {
+  display: flex;
+  height: 100vh; /* Asegurarse de que ocupa toda la altura de la ventana */
+}
+
 .side-menu {
   width: 100%;
   min-width: 15%;
   max-width: 220px;
-  background: rgba(45, 53, 60, 1);
+  background: rgb(0, 26, 49);
   position: fixed;
   z-index: 100;
-  transition: 0.3s ease-in-out;
   height: 100%;
-}
-
-.sidebar .imgbox {
-  position: relative;
-  height: 150px;
-  width: 100%;
-  margin-bottom: 20px;
-  z-index: -1;
-}
-
-.sidebar .imgbox img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  padding: 5px;
-  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar .Navbar {
   width: 100%;
   padding: 0 10px;
   list-style: none;
+  margin-top: 10px; /* Reducir el espacio superior */
 }
 
 .sidebar .Navbar li {
@@ -235,15 +203,23 @@ export default {
   transition: 0.3s;
 }
 
+/* Estilos para el contenido principal */
+.main-content {
+  margin-left: 220px; /* Espacio para la barra lateral */
+  padding: 20px;
+  height: calc(100vh - 40px); /* Altura total menos la altura de la barra de navegación */
+  overflow-y: auto; /* Permitir desplazamiento si el contenido es largo */
+}
+
 /* Estilos responsivos */
 @media (max-width: 700px) {
   .nav-bar {
-    position: relative;
+    flex-direction: column;
+    height: auto; /* Ajustar altura para móviles */
   }
 
   .menu-horizontal {
     flex-direction: column; /* Cambiar a columna para dispositivos pequeños */
-    justify-content: center; /* Centrar los elementos verticalmente */
   }
 
   .side-menu {
@@ -253,6 +229,7 @@ export default {
     min-width: 100%;
     max-width: 100%;
     transition: none; /* Desactivar la transición */
+    margin-top: 50px; /* Añadir margen superior para espaciar del nav-bar */
   }
 
   .sidebar {
@@ -264,15 +241,28 @@ export default {
   }
 
   .main-content {
-    padding: 20px;
-    width: 100%;
-    margin: 0 !important;
-    /* Ajustar el relleno según sea necesario */
+    margin-left: 0; /* Sin margen para móviles */
+    padding: 10px;
+    height: auto; /* Ajustar altura para móviles */
+  }
+}
+
+@media (min-width: 2560px) {
+  .nav-bar {
+    height: 60px; /* Mayor altura para pantallas 4K */
   }
 
-  .sidebar .imgbox {
-    height: auto;
-    margin-bottom: 20px;
+  .logo img {
+    height: 50px; /* Aumentar tamaño del logo en pantallas grandes */
+  }
+
+  .menu-horizontal > li > a {
+    padding: 15px 25px; /* Mayor padding en pantallas grandes */
+    font-size: 18px; /* Aumentar tamaño de fuente en pantallas grandes */
+  }
+
+  .sidebar .Navbar li a {
+    font-size: 24px; /* Aumentar el tamaño de fuente en pantallas grandes */
   }
 }
 </style>

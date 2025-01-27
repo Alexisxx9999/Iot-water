@@ -1,39 +1,43 @@
 <template>
-  <h1>Bienvenido a Iot water <em>username</em></h1>
-  <p>Accesos directos y Estadisticas</p>
-  <div class="card-container">
-    <Card
-      title="Medidores Activos"
-      :value="totalUsuarios"
-      icon="fas fa-tachometer-alt"
-      bgColorClass="bg-white"
-      enlace="dashboard/medidor"
-    />
-    <Card
-      title="Gateways Activos "
-      :value="totalMascotas"
-      icon="fas fa-plug"
-      bgColorClass="bg-white"
-      enlace="dashboard/gateway"
-    />
-    <Card
-      title="Usuarios"
-      :value="totalVacunas"
-      icon="fas fa-users"
-      bgColorClass="bg-white"
-      enlace="dashboard/usuario"
-    />
-    <Card
-      title="Clientes"
-      :value="totalAdopciones"
-      icon="fas fa-users"
-      bgColorClass="bg-bg-white"
-      enlace="dashboard/cliente"
-    />
-  </div>
+  <div class="dashboard">
+    <h1>Bienvenido a IoT Water, <em>{{ username }}</em></h1>
+    <p>Accesos directos y Estadísticas</p>
+    
+    <div class="card-container">
+      <Card
+        title="Medidores Activos"
+        :value="totalMedidores"
+        icon="fas fa-tachometer-alt"
+        bgColorClass="bg-light"
+        enlace="dashboard/medidor"
+      />
+      <Card
+        title="Clientes Activos"
+        :value="totalClientes"
+        icon="fas fa-users"
+        bgColorClass="bg-light"
+        enlace="dashboard/cliente"
+      />
+      <Card
+        title="Alertas de Consumo"
+        :value="totalAlertas"
+        icon="fas fa-exclamation-triangle"
+        bgColorClass="bg-light"
+        enlace="dashboard/alertas"
+      />
+      <Card
+        title="Usuarios"
+        :value="totalUsuarios"
+        icon="fas fa-user-friends"
+        bgColorClass="bg-light"
+        enlace="dashboard/usuario"
+      />
+    </div>
 
-  <h3>Estadisticas de Agua por mes</h3>
-  <canvas ref="lineChart" class="estadistica"> </canvas>
+    <h3>Estadísticas de Consumo de Agua por mes</h3>
+    <canvas ref="lineChart" class="estadistica"></canvas>
+    <canvas ref="barChart" class="estadistica"></canvas>
+  </div>
 </template>
 
 <script>
@@ -48,43 +52,37 @@ export default {
   },
   data() {
     return {
-      totalUsuarios: 20, // Datos quemados
-      totalMascotas: 50,
-      totalVacunas: 30,
-      totalAdopciones: 15,
+      username: "Usuario", // Cambia esto según sea necesario
+      totalMedidores: 120, // Datos simulados
+      totalClientes: 300,
+      totalAlertas: 25,
+      totalUsuarios: 50,
       lineChart: null,
       barChart: null,
       lineChartData: {
-        pageViews: [], // Usuarios registrados simulados durante 7 días
-        visitors: [], // Mascotas registradas simuladas durante 7 días
+        consumoMensual: [],
+        alertasMensuales: [],
       },
       barChartData: {
-        labels: ["Perros", "Gatos", "Aves"], // Tipos de mascotas
-        data: [20, 25, 5], // Cantidad por tipo
+        labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio"],
+        data: [200, 150, 250, 300, 100, 400, 350], // Consumo de agua por mes
       },
     };
   },
   methods: {
     fetchData() {
-      // Generar datos simulados para los últimos 7 días
-      this.lineChartData.pageViews = this.simulateDailyData(this.totalUsuarios);
-      this.lineChartData.visitors = this.simulateDailyData(this.totalMascotas);
-
-      // Crear gráficos
+      this.lineChartData.consumoMensual = this.simulateMonthlyData(this.totalMedidores);
+      this.lineChartData.alertasMensuales = this.simulateMonthlyData(this.totalAlertas);
       this.createLineChart();
       this.createBarChart();
     },
-    simulateDailyData(total) {
-      const dailyData = [];
-      let cumulative = 0;
-
+    simulateMonthlyData(total) {
+      const monthlyData = [];
       for (let i = 0; i < 7; i++) {
-        const dailyIncrement = Math.floor(total / 7) + Math.random() * 5;
-        cumulative += dailyIncrement;
-        dailyData.push(Math.min(cumulative, total));
+        const monthlyIncrement = Math.floor(total / 7) + Math.random() * 10;
+        monthlyData.push(monthlyIncrement);
       }
-
-      return dailyData;
+      return monthlyData;
     },
     createLineChart() {
       const ctx = this.$refs.lineChart.getContext("2d");
@@ -93,7 +91,7 @@ export default {
         this.lineChart.destroy();
       }
 
-      const labels = this.getLast7Days();
+      const labels = this.getLast7Months();
 
       this.lineChart = new Chart(ctx, {
         type: "line",
@@ -101,18 +99,18 @@ export default {
           labels: labels,
           datasets: [
             {
-              label: "Usuarios Registrados",
-              data: this.lineChartData.pageViews,
-              borderColor: "blue",
-              backgroundColor: "rgba(0, 0, 255, 0.1)",
+              label: "Consumo de Agua",
+              data: this.lineChartData.consumoMensual,
+              borderColor: "#007bff",
+              backgroundColor: "rgba(0, 123, 255, 0.1)",
               fill: true,
               lineTension: 0.4,
             },
             {
-              label: "Mascotas Registradas",
-              data: this.lineChartData.visitors,
-              borderColor: "green",
-              backgroundColor: "rgba(0, 255, 0, 0.1)",
+              label: "Alertas de Consumo",
+              data: this.lineChartData.alertasMensuales,
+              borderColor: "#dc3545",
+              backgroundColor: "rgba(220, 53, 69, 0.1)",
               fill: true,
               lineTension: 0.4,
             },
@@ -131,18 +129,10 @@ export default {
           },
           scales: {
             x: {
-              display: true,
-              title: {
-                display: true,
-                text: "Fecha",
-              },
+              title: { display: true, text: "Mes" },
             },
             y: {
-              display: true,
-              title: {
-                display: true,
-                text: "Cantidad",
-              },
+              title: { display: true, text: "Consumo / Alertas" },
               beginAtZero: true,
             },
           },
@@ -162,18 +152,10 @@ export default {
           labels: this.barChartData.labels,
           datasets: [
             {
-              label: "Tipos de Mascotas",
+              label: "Consumo de Agua (litros)",
               data: this.barChartData.data,
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.2)", // Red
-                "rgba(255, 159, 64, 0.2)", // Orange
-                "rgba(75, 192, 192, 0.2)", // Green
-              ],
-              borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(255, 159, 64, 1)",
-                "rgba(75, 192, 192, 1)",
-              ],
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderColor: "rgba(75, 192, 192, 1)",
               borderWidth: 1,
             },
           ],
@@ -192,23 +174,20 @@ export default {
           scales: {
             y: {
               beginAtZero: true,
-              title: {
-                display: true,
-                text: "Total Mascotas",
-              },
+              title: { display: true, text: "Litros" },
             },
           },
         },
       });
     },
-    getLast7Days() {
-      const dates = [];
+    getLast7Months() {
+      const months = [];
+      const date = new Date();
       for (let i = 6; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        dates.push(date.toISOString().split("T")[0]);
+        date.setMonth(date.getMonth() - 1);
+        months.push(date.toLocaleString('default', { month: 'long' }));
       }
-      return dates;
+      return months.reverse();
     },
   },
   mounted() {
@@ -218,36 +197,40 @@ export default {
 </script>
 
 <style scoped>
-.estadistica {
-  width: 90%;
-  margin: auto;
-  margin-top: 50px;
-}
-h3 {
-  width: 94%;
-
-  color: #333;
-  margin: auto;
+.dashboard {
   text-align: center;
-  padding: 10px;
-  margin-bottom: 50px;
-  margin-top: 50px;
+  padding: 20px;
 }
+
+h1 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
 .card-container {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 16px;
+  flex-wrap: wrap;
+  margin: 20px 0;
 }
-@media (max-width: 700px) {
-  .card-container {
-    flex-direction: column;
-  }
-  .card-container * {
-    width: 90%;
-    flex: 1;
-    margin-top: 20px;
-  }
+
+.card-container > * {
+  margin: 10px; /* Espaciado entre tarjetas */
+  flex: 1 1 200px; /* Flexível para adaptarse a diferentes tamaños de pantalla */
+}
+
+.estadistica {
+  width: 90%;
+  margin: auto;
+  margin-top: 30px;
+}
+
+h3 {
+  color: #555;
+  margin: 30px 0;
+  font-size: 24px;
+  font-weight: 600;
 }
 </style>
-<!-- name: "Dashboard", -->

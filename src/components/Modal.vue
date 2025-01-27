@@ -2,16 +2,18 @@
   <div v-if="show" class="modal-overlay">
     <div class="modal">
       <h3>{{ title }}</h3>
-      <p>{{ message }}</p>
-      <button @click="confirm" class="btn">Confirmar</button>
-      <button @click="cancel" class="btn">Cancelar</button>
+      <slot></slot> <!-- Usar slot para mostrar contenido personalizado -->
+      <div class="modal-buttons">
+        <button @click="confirm" class="btn">Confirmar</button>
+        <button @click="cancel" class="btn">Cancelar</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["show", "title", "message"],
+  props: ["show", "title"],
   methods: {
     confirm() {
       this.$emit("confirm");
@@ -43,15 +45,23 @@ export default {
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre botones */
+  margin-top: 20px; /* Espacio superior para botones */
+}
+
 .btn {
-  background-color: #ffcc5f;
+  background-color: #00033d;
   color: white;
-  padding: 8px;
-  margin: 0 50px;
+  padding: 8px 15px;
   border: none;
   border-radius: 7px;
+  cursor: pointer; /* Cambiar el cursor a pointer para indicar clickeable */
 }
+
 .btn:hover {
-  background-color: orange;
+  background-color: rgb(0, 1, 73);
 }
 </style>

@@ -16,14 +16,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.imageMascota {
-  width: 40%;
-  padding: 10px;
-}
-.imageUsuario {
-  width: 40%;
-  padding: 10px;
-}
+
 .header-container h1 {
   margin: 0;
   font-size: 28px;
@@ -41,9 +34,11 @@
 .add-button:hover {
   background-color: #218838;
 }
+
 .title2 {
   text-align: center;
 }
+
 /* Formulario */
 .form-container {
   background-color: #fff;
@@ -52,6 +47,7 @@
   padding: 20px;
   margin-top: 20px;
 }
+
 .form-principal {
   max-width: 850px;
   margin: 0 auto;
@@ -94,67 +90,10 @@
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-textarea.form-control {
-  resize: vertical;
-}
-
 .form-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-}
-
-.btn {
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: white;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-  border: none;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
-button[type="submit"],
-button[type="button"] {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-button[type="submit"] {
-  background-color: #007bff;
-}
-
-button[type="submit"]:hover {
-  background-color: #0056b3;
-}
-
-button[type="button"] {
-  background-color: #dc3545;
-}
-
-button[type="button"]:hover {
-  background-color: #c82333;
 }
 
 /* Tabla */
@@ -165,31 +104,33 @@ button[type="button"]:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: #fff; /* Fondo blanco para la tabla */
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-th,
+th {
+  background-color: #001f3f; /* Azul marino para el encabezado */
+  color: white; /* Texto blanco para contraste */
+  padding: 12px;
+  text-align: left;
+}
+
 td {
   padding: 12px;
   text-align: left;
 }
 
-th {
-  background-color: #ffcc5f;
-  font-weight: bold;
-}
-
 tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: #e7f3ff; /* Azul claro para filas pares */
 }
 
 tr:hover {
-  background-color: #f1f1f1;
+  background-color: #cce5ff; /* Color al pasar el ratón por encima de las filas */
 }
 
+/* Acciones */
 .actions i {
   margin-right: 10px;
   cursor: pointer;
@@ -199,49 +140,8 @@ tr:hover {
   color: #007bff;
 }
 
-/* Detalle de la mascota */
-.pet-details-container {
-  display: flex;
-  width: 95%;
-  margin: auto;
-  flex-direction: row;
-  align-items: center;
-  background-color: #faf5f5;
-  padding: 2%;
-  border-radius: 10px;
-}
-
-.pet-details {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-top: 20px;
-  width: 100%;
-  max-width: 950px;
-}
-
-.pet-details h2 {
-  margin-bottom: 40px;
-  text-align: center;
-}
-.pet-details h4 {
-  background-color: #f5dfdf;
-}
-.pet-details p {
-  margin: 10px 0;
-}
-.mascota {
-  display: flex;
-  flex-direction: row;
-}
-.usuario {
-  display: flex;
-  flex-direction: row;
-}
-
 .back-button {
-  background-color: #ffcc5f;
+  background-color: #070055;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -253,8 +153,63 @@ tr:hover {
 }
 
 .back-button:hover {
-  background-color: orange;
+  background-color: rgb(0, 1, 77);
 }
-.link {
-  text-decoration: none;
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-container h1 {
+    font-size: 24px;
+  }
+
+  .add-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .form-principal {
+    padding: 10px; /* Reducir padding en móviles */
+  }
+
+  .title {
+    font-size: 16px; /* Ajustar tamaño de fuente */
+  }
+
+  .form-control {
+    font-size: 12px; /* Ajustar tamaño de fuente */
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-buttons button {
+    width: 100%; /* Botones ocupan todo el ancho */
+    margin-top: 10px;
+  }
+
+  .back-button {
+    left: 0;
+    margin-top: 10px; /* Ajustar margen superior */
+  }
+}
+
+@media (min-width: 2560px) {
+  .header-container h1 {
+    font-size: 32px; /* Aumentar tamaño de fuente para pantallas grandes */
+  }
+
+  .form-principal {
+    max-width: 1200px; /* Aumentar el ancho máximo para pantallas grandes */
+  }
+
+  th, td {
+    padding: 15px; /* Aumentar padding en la tabla */
+  }
 }
