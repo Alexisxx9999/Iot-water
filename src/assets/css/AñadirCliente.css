@@ -1,7 +1,7 @@
 /* Estilos generales */
 .content {
-  margin: 20px;
-  padding: 20px;
+  margin: 0; /* Eliminar margen */
+  padding: 20px; /* Mantener padding */
   background-color: #f9f9f9;
   border-radius: 10px;
 }
@@ -15,6 +15,7 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Ajustar el margen superior */
 }
 
 .imageMascota {
@@ -55,7 +56,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  margin-top: 20px;
+  margin-top: 20px; /* Ajustar el margen superior */
 }
 
 .form-principal {

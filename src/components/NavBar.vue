@@ -147,7 +147,6 @@ export default {
 .content-total {
   display: flex;
   height: 100vh; /* Asegurarse de que ocupa toda la altura de la ventana */
-  margin-top: 40px; /* Para evitar que el contenido se superponga a la barra de navegación */
 }
 
 .side-menu {
@@ -160,6 +159,7 @@ export default {
   height: calc(100vh - 40px); /* Altura total menos la altura de la barra de navegación */
   display: flex;
   flex-direction: column;
+  top: 40px; /* Alinear con la barra de navegación */
 }
 
 .sidebar .Navbar {
@@ -208,8 +208,7 @@ export default {
 .main-content {
   margin-left: 220px; /* Espacio para la barra lateral */
   padding: 20px;
-  height: calc(100vh - 40px); /* Altura total menos la altura de la barra de navegación */
-  overflow-y: auto; /* Permitir desplazamiento si el contenido es largo */
+  margin-top: 0; /* Sin margen superior para que el contenido esté alineado */
 }
 
 /* Estilos responsivos */
@@ -230,7 +229,7 @@ export default {
     min-width: 100%;
     max-width: 100%;
     transition: none; /* Desactivar la transición */
-    margin-top: 50px; /* Añadir margen superior para espaciar del nav-bar */
+    margin-top: 0; /* Sin margen superior para móviles */
   }
 
   .sidebar {

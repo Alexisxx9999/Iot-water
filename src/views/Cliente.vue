@@ -1,55 +1,35 @@
 <template>
   <div class="content">
+    <!-- Encabezado y botón para abrir el modal del formulario -->
     <div class="header-container">
       <h1>Clientes</h1>
       <div class="user-info">
         <span>Usuario Admin</span>
       </div>
       <div>
-        <button @click="showAddForm" class="add-button">Añadir adopcion</button>
+        <button @click="showAddForm" class="add-button">Añadir Cliente</button>
       </div>
     </div>
+    
     <div class="form-container" v-if="showForm">
-      <h2 class="title2">{{ editing ? "Editar " : "Agregar " }} adopcion 😸</h2>
+      <h2 class="title2">{{ editing ? "Editar " : "Agregar " }} Cliente</h2>
       <form @submit.prevent="submitForm" class="form-principal">
-          <div class="inf">
+        <div class="inf">
           <div class="form-group">
-            <label for="idMascota" class="title">Nombre de la Mascota</label>
-            <input
-            type="text"
-              name="idMascota"
-              id="idMascota"
-              required
-              v-model="currentPet.idMascota"
-              class="form-control"
-            >
-        
-            
-            
+            <label for="clientId" class="title">ID del Cliente</label>
+            <input type="text" id="clientId" v-model="currentClient.idClient" />
           </div>
           <div class="form-group">
-            <label for="description" class="title">Información adicional</label>
-            <input
-            type="text"
-              id="description"
-              v-model="currentPet.descripcion"
-              class="form-control"
-              
-            >
+            <label for="clientName" class="title">Nombre del Cliente</label>
+            <input type="text" id="clientName" v-model="currentClient.name" />
           </div>
           <div class="form-group">
-            <label for="idUsuario" class="title">Nombre del Dueño</label>
-            <input
-            type="text"
-              name="idUsuario"
-              id="idusuario"
-              required
-              v-model="currentPet.idUsuario"
-              class="form-control"
-            >
-              
-                
-            
+            <label for="clientEmail" class="title">Email del Cliente</label>
+            <input type="email" id="clientEmail" v-model="currentClient.email" />
+          </div>
+          <div class="form-group">
+            <label for="clientPhone" class="title">Teléfono del Cliente</label>
+            <input type="text" id="clientPhone" v-model="currentClient.phone" />
           </div>
           <div class="form-buttons">
             <button type="submit" class="btn btn-primary">
@@ -62,106 +42,91 @@
         </div>
       </form>
     </div>
+
     <div class="table-container">
       <table>
         <thead>
           <tr>
-            <th><i class="fas fa-calendar-alt"></i> Fecha:</th>
-            <th><i class="fas fa-user"></i> Nombre de Mascota</th>
-            <th><i class="fas fa-id-card-alt"></i> Dueño</th>
-            <th><i class="fas fa-at"></i> Descripcion</th>
-            <th><i class="fas fa-at"></i> Acciones</th>
+            <th>ID del Cliente</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="pet in adopciones" :key="pet.idAdopcion">
-            <td>{{ pet.createAdopcion }}</td>
-            <td>{{ getPetName(pet.idMascota) }}</td>
-            <td>{{ getUserName(pet.idUsuario) }}</td>
-            <td>{{ pet.descripcion }}</td>
+          <tr v-for="client in clients" :key="client.idClient">
+            <td>{{ client.idClient }}</td>
+            <td>{{ client.name }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.phone }}</td>
             <td class="actions">
-              <i class="fas fa-eye" @click="viewDetails(pet.idAdopcion)"></i>
-              <i class="fas fa-edit" @click="editPet(pet.idAdopcion)"></i>
-              <i
-                class="fas fa-trash-alt"
-                @click="deletePet(pet.idAdopcion)"
-              ></i>
+              <i class="fas fa-eye" @click="viewDetails(client.idClient)"></i>
+              <i class="fas fa-edit" @click="editClient(client.idClient)"></i>
+              <i class="fas fa-trash-alt" @click="confirmDelete(client.idClient)"></i>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button @click="goBack" class="back-button">Regresar</button>
-    <!-- Modal para confirmación de eliminación -->
+
+    <!-- Modal para el formulario de agregar/editar -->
     <Modal
-      v-if="showModal"
-      :show="showModal"
-      title="Confirmar Eliminación"
-      message="¿Estás seguro de que quieres eliminar esta adopcion?"
-      @confirm="confirmDelete"
-      @cancel="cancelDelete"
-    />
-    <!-- Sección para mostrar el detalle de la mascota -->
-    <div v-if="selectedPet" class="pet-details-container">
-      <div class="pet-details">
-        <h2>Detalle de la Adopcion</h2>
-        <p>
-          <strong>Fecha de Adopcion: </strong> {{ selectedPet.createAdopcion }}
-        </p>
-        <p>
-          <strong>Descripcion de Adopcion: </strong>
-          {{ selectedPet.descripcion }}
-        </p>
-
-        <h4>Informacion de la mascota adoptada 😻</h4>
-        <div class="mascota">
-          <div class="inf-mascota">
-            <p>
-              <strong>Nombre de la mascota: </strong>
-              {{ getPetDetails(selectedPet.idMascota).nombreMascota }}
-            </p>
-            <p>
-              <strong>Sexo: </strong>
-              {{ getPetDetails(selectedPet.idMascota).sexo }}
-            </p>
-            <p>
-              <strong>Especie de la mascota </strong>
-              {{ getPetDetails(selectedPet.idMascota).idTipoMascota }}
-            </p>
-            <p>
-              <strong>descripcion de la mascota </strong>
-              {{ getPetDetails(selectedPet.idMascota).descripcion }}
-            </p>
-          </div>
+      v-if="showFormModal"
+      :show="showFormModal"
+      :title="editing ? 'Editar Cliente' : 'Agregar Cliente'"
+      @cancel="closeFormModal"
+    >
+      <form @submit.prevent="submitForm" class="form-principal">
+        <div class="form-group">
+          <label for="name">Nombre del Cliente</label>
+          <input
+            type="text"
+            id="name"
+            v-model="currentClient.name"
+            class="form-control"
+            required
+          />
         </div>
-        <h4>Informacion general del dueño 👧</h4>
-        <div class="usuario">
-          <div class="imageUsuario">
-            <img src="" alt="imagen del usuario" />
-          </div>
-          <div class="inf-usuario">
-            <p>
-              <strong>Nombres y apellidos: </strong>
-              {{ getUserDetails(selectedPet.idUsuario).nombreUsuario }}
-              {{ getUserDetails(selectedPet.idUsuario).apellidoUsuario }}
-            </p>
-            <p>
-              <strong>telefono: </strong>
-              {{ getUserDetails(selectedPet.idUsuario).telefonoUsuario }}
-            </p>
-            <p>
-              <strong>Ubicacion: </strong>
-              {{ getUserDetails(selectedPet.idUsuario).ubicacionUsuario }}
-            </p>
-
-            <p>
-              <strong>Email del Dueño: </strong>
-              {{ getUserDetails(selectedPet.idUsuario).emailUsuario }}
-            </p>
-          </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            v-model="currentClient.email"
+            class="form-control"
+            required
+          />
         </div>
+        <div class="form-group">
+          <label for="phone">Teléfono</label>
+          <input
+            type="text"
+            id="phone"
+            v-model="currentClient.phone"
+            class="form-control"
+          />
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-primary">
+            {{ editing ? "Guardar" : "Agregar" }}
+          </button>
+          <button type="button" @click="closeFormModal" class="btn btn-secondary">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </Modal>
 
-        <button @click="selectedPet = null" class="back-button">Cerrar</button>
+    <!-- Detalle del Cliente -->
+    <div v-if="selectedClient" class="client-details-container">
+      <div class="client-details">
+        <h2>Detalle del Cliente</h2>
+        <p><strong>ID del Cliente:</strong> {{ selectedClient.idClient }}</p>
+        <p><strong>Nombre:</strong> {{ selectedClient.name }}</p>
+        <p><strong>Email:</strong> {{ selectedClient.email }}</p>
+        <p><strong>Teléfono:</strong> {{ selectedClient.phone }}</p>
+        <button @click="selectedClient = null" class="back-button">Cerrar</button>
       </div>
     </div>
   </div>
@@ -171,162 +136,90 @@
 import Modal from "../components/Modal.vue";
 
 export default {
-  name: "Cliente",
+  name: "Client",
   components: {
     Modal,
   },
   data() {
     return {
-      pets: [],
-      users: [],
-      adopciones: [],
-      currentPet: {
-        idMascota: "",
-        idAdopcion: "",
-        idUsuario: "",
-        descripcion: "",
-
-        createAdopcion: "",
+      clients: [], // Lista de clientes
+      currentClient: {
+        idClient: "",
+        name: "",
+        email: "",
+        phone: "",
       },
       editing: false,
-      showForm: false,
-      selectedPet: null,
-      showModal: false,
-      petToDelete: null,
-      shouldShowImageUploader: false,
+      showFormModal: false, // Controla si el modal del formulario está visible
+      selectedClient: null, // Controla si hay un cliente seleccionado para mostrar detalles
     };
   },
-  watch: {
-    $route(to) {
-      this.updateImageUploaderProps(to);
-    },
+  created() {
+    this.loadDummyData();
   },
   methods: {
-    updateImageUploaderProps(route) {
-      // Actualiza los props según la ruta actual
-      if (route.name === "Mascotas") {
-        this.shouldShowImageUploader = true;
-      } else if (route.name === "Usuarios") {
-        this.shouldShowImageUploader = true;
-      } else if (route.name === "Adopciones") {
-        this.shouldShowImageUploader = true;
-      } else if (route.name === "Vacunas") {
-        this.shouldShowImageUploader = true;
-      } else {
-        this.shouldShowImageUploader = false; // Ocultar ImageUploader en otras vistas
-      }
+    // Cargar datos predefinidos
+    loadDummyData() {
+      this.clients = [
+        {
+          idClient: "1",
+          name: "Cliente 1",
+          email: "cliente1@example.com",
+          phone: "123-456-7890",
+        },
+        {
+          idClient: "2",
+          name: "Cliente 2",
+          email: "cliente2@example.com",
+          phone: "098-765-4321",
+        },
+      ];
     },
-
-    async getPets() {
-      try {
-        const response = await instance.get("/mascotas");
-        console.log(response.data);
-        this.pets = response.data;
-      } catch (error) {
-        console.error("Error fetching mascotas:", error);
-      }
-    },
-    async submitForm() {
-      try {
-        if (this.editing) {
-          await instance.patch(
-            `/adopciones/${this.currentPet.idAdopcion}`,
-            this.currentPet
-          );
-        } else {
-          await instance.post("/adopciones", this.currentPet);
-        }
-        this.getAdopciones();
-        this.resetForm();
-      } catch (error) {
-        console.error("Error submitting form:", error);
-      }
-    },
-
-    async getAdopciones() {
-      try {
-        const response = await instance.get("/adopciones");
-        console.log(response.data);
-        this.adopciones = response.data;
-      } catch (error) {
-        console.error("Error fetching adopciones:", error);
-      }
-    },
-    getPetName(idMascota) {
-      const pet = this.pets.find((p) => p.idMascota === idMascota);
-      return pet ? pet.nombreMascota : "Nombre no disponible";
-    },
-
-    getUserName(idUsuario) {
-      const user = this.users.find((u) => u.idUsuario === idUsuario);
-      return user
-        ? `${user.nombreUsuario} ${user.apellidoUsuario}`
-        : "Nombre no disponible";
-    },
-    editPet(id) {
-      this.editing = true;
-      this.currentPet = {
-        ...this.adopciones.find((pet) => pet.idAdopcion === id),
-      };
-      this.showForm = true;
-    },
-    getPetDetails(idMascota) {
-      return this.pets.find((p) => p.idMascota === idMascota) || {};
-    },
-
-    getUserDetails(idUsuario) {
-      return this.users.find((u) => u.idUsuario === idUsuario) || {};
-    },
-    viewDetails(id) {
-      this.selectedPet = this.adopciones.find((pet) => pet.idAdopcion === id);
-    },
-
-    async deletePet(id) {
-      this.petToDelete = id;
-      this.showModal = true;
-    },
-    async confirmDelete() {
-      try {
-        await instance.delete(`/adopciones/${this.petToDelete}`);
-        this.getAdopciones();
-        this.showModal = false;
-        this.petToDelete = null;
-      } catch (error) {
-        console.error("Error deleting adopcion:", error);
-      }
-    },
-    cancelDelete() {
-      this.showModal = false;
-      this.petToDelete = null;
-    },
-    resetForm() {
-      this.currentPet = {
-        idMascota: "",
-        idAdopcion: "",
-        idUsuario: "",
-        descripcion: "",
-        createAdopcion: "",
-      };
-      this.editing = false;
-      this.showForm = false;
-    },
+    // Mostrar el modal del formulario para agregar
     showAddForm() {
       this.resetForm();
-      this.showForm = true;
+      this.showFormModal = true;
     },
-    cancelEdit() {
+    // Configurar el formulario para editar un Cliente
+    editClient(id) {
+      this.editing = true;
+      this.currentClient = { ...this.clients.find(client => client.idClient === id) };
+      this.showFormModal = true;
+    },
+    // Guardar o agregar un Cliente
+    submitForm() {
+      if (this.editing) {
+        const index = this.clients.findIndex(client => client.idClient === this.currentClient.idClient);
+        if (index !== -1) this.clients[index] = { ...this.currentClient };
+      } else {
+        this.currentClient.idClient = (this.clients.length + 1).toString();
+        this.clients.push({ ...this.currentClient });
+      }
+      this.closeFormModal();
+    },
+    // Cerrar el modal del formulario
+    closeFormModal() {
       this.resetForm();
-      this.showForm = false;
+      this.showFormModal = false;
     },
-    goBack() {
-      this.$router.go(-1);
+    // Reiniciar el formulario
+    resetForm() {
+      this.currentClient = {
+        idClient: "",
+        name: "",
+        email: "",
+        phone: "",
+      };
+      this.editing = false;
     },
-  },
-  mounted() {
-    this.getAdopciones();
-    this.getPets();
-    this.getUsers();
-    this.updateImageUploaderProps(this.$route);
+    // Mostrar detalles de un Cliente
+    viewDetails(id) {
+      this.selectedClient = this.clients.find(client => client.idClient === id);
+    },
+    // Confirmar eliminación de un Cliente
+    confirmDelete(id) {
+      this.clients = this.clients.filter(client => client.idClient !== id);
+    },
   },
 };
 </script>

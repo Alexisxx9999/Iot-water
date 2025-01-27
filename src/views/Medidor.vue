@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <!-- Encabezado y botón para abrir el modal del formulario -->
     <div class="header-container">
       <h1>Medidores</h1>
       <div class="user-info">
@@ -9,30 +10,26 @@
         <button @click="showAddForm" class="add-button">Añadir Medidor</button>
       </div>
     </div>
-
-    <!-- Formulario de Medidor -->
+    
     <div class="form-container" v-if="showForm">
       <h2 class="title2">{{ editing ? "Editar " : "Agregar " }} Medidor</h2>
       <form @submit.prevent="submitForm" class="form-principal">
         <div class="inf">
-          <!-- Nombre del Medidor -->
           <div class="form-group">
-            <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
-          </div>
-          <!-- Ubicación -->
-          <div class="form-group">
-            <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
-          </div>
-          <!-- Estado -->
-          <div class="form-group">
-            <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
+            <label for="meterId" class="title">ID del Medidor</label>
+            <input type="text" id="meterId" v-model="currentMeter.idMeter" />
           </div>
           <div class="form-group">
-            <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
+            <label for="meterName" class="title">Nombre del Medidor</label>
+            <input type="text" id="meterName" v-model="currentMeter.name" />
+          </div>
+          <div class="form-group">
+            <label for="meterLocation" class="title">Ubicación</label>
+            <input type="text" id="meterLocation" v-model="currentMeter.location" />
+          </div>
+          <div class="form-group">
+            <label for="meterType" class="title">Tipo de Medidor</label>
+            <input type="text" id="meterType" v-model="currentMeter.type" />
           </div>
           <div class="form-buttons">
             <button type="submit" class="btn btn-primary">
@@ -46,61 +43,91 @@
       </form>
     </div>
 
-    <!-- Tabla de Medidores -->
     <div class="table-container">
       <table>
         <thead>
           <tr>
-            <th><i class="fas fa-calendar-alt"></i> Fecha de Instalación</th>
-            <th><i class="fas fa-cogs"></i> Nombre del Medidor</th>
-            <th><i class="fas fa-map-marker-alt"></i> Ubicación</th>
-            <th><i class="fas fa-plug"></i> Estado</th>
-            <th><i class="fas fa-cogs"></i> Acciones</th>
+            <th>ID del Medidor</th>
+            <th>Nombre</th>
+            <th>Ubicación</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="medidor in medidores" :key="medidor.idMedidor">
-            <td>{{ medidor.installDate }}</td>
-            <td>{{ medidor.name }}</td>
-            <td>{{ medidor.location }}</td>
-            <td>{{ medidor.status }}</td>
+          <tr v-for="meter in meters" :key="meter.idMeter">
+            <td>{{ meter.idMeter }}</td>
+            <td>{{ meter.name }}</td>
+            <td>{{ meter.location }}</td>
+            <td>{{ meter.type }}</td>
             <td class="actions">
-              <i class="fas fa-eye" @click="viewDetails(medidor.idMedidor)"></i>
-              <i class="fas fa-edit" @click="editMedidor(medidor.idMedidor)"></i>
-              <i class="fas fa-trash-alt" @click="confirmDelete(medidor.idMedidor)"></i>
+              <i class="fas fa-eye" @click="viewDetails(meter.idMeter)"></i>
+              <i class="fas fa-edit" @click="editMeter(meter.idMeter)"></i>
+              <i class="fas fa-trash-alt" @click="confirmDelete(meter.idMeter)"></i>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Botón para regresar -->
-    <button @click="goBack" class="back-button">Regresar</button>
-
-    <!-- Modal para confirmación de eliminación -->
+    <!-- Modal para el formulario de agregar/editar -->
     <Modal
-      v-if="showModal"
-      :show="showModal"
-      title="Confirmar Eliminación"
-      message="¿Estás seguro de que quieres eliminar este Medidor?"
-      @confirm="deleteMedidor(medidorToDelete)"
-      @cancel="cancelDelete"
-    />
-
-    <!-- Detalle de Medidor -->
-    <div v-if="selectedMedidor" class="medidor-details-container">
-      <div class="medidor-details">
-        <h2>Detalle del Medidor</h2>
-        <p><strong>Fecha de Instalación:</strong> {{ selectedMedidor.installDate }}</p>
-        <p><strong>Ubicación:</strong> {{ selectedMedidor.location }}</p>
-        <p><strong>Estado:</strong> {{ selectedMedidor.status }}</p>
-
-        <h4>Información adicional del Medidor</h4>
-        <div class="additional-info">
-          <p><strong>Descripción:</strong> {{ selectedMedidor.description }}</p>
+      v-if="showFormModal"
+      :show="showFormModal"
+      :title="editing ? 'Editar Medidor' : 'Agregar Medidor'"
+      @cancel="closeFormModal"
+    >
+      <form @submit.prevent="submitForm" class="form-principal">
+        <div class="form-group">
+          <label for="name">Nombre del Medidor</label>
+          <input
+            type="text"
+            id="name"
+            v-model="currentMeter.name"
+            class="form-control"
+            required
+          />
         </div>
+        <div class="form-group">
+          <label for="location">Ubicación</label>
+          <input
+            type="text"
+            id="location"
+            v-model="currentMeter.location"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="type">Tipo de Medidor</label>
+          <input
+            type="text"
+            id="type"
+            v-model="currentMeter.type"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-primary">
+            {{ editing ? "Guardar" : "Agregar" }}
+          </button>
+          <button type="button" @click="closeFormModal" class="btn btn-secondary">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </Modal>
 
-        <button @click="selectedMedidor = null" class="back-button">Cerrar</button>
+    <!-- Detalle del Medidor -->
+    <div v-if="selectedMeter" class="meter-details-container">
+      <div class="meter-details">
+        <h2>Detalle del Medidor</h2>
+        <p><strong>ID del Medidor:</strong> {{ selectedMeter.idMeter }}</p>
+        <p><strong>Nombre:</strong> {{ selectedMeter.name }}</p>
+        <p><strong>Ubicación:</strong> {{ selectedMeter.location }}</p>
+        <p><strong>Tipo:</strong> {{ selectedMeter.type }}</p>
+        <button @click="selectedMeter = null" class="back-button">Cerrar</button>
       </div>
     </div>
   </div>
@@ -110,95 +137,89 @@
 import Modal from "../components/Modal.vue";
 
 export default {
-  name: "Medidor",
+  name: "Meter",
   components: {
     Modal,
   },
   data() {
     return {
-      medidores: [],
-      currentMedidor: {
-        idMedidor: "",
+      meters: [], // Lista de medidores
+      currentMeter: {
+        idMeter: "",
         name: "",
         location: "",
-        status: "activo",
-        installDate: "",
-        description: "",
+        type: "",
       },
       editing: false,
-      showForm: false,
-      selectedMedidor: null,
-      showModal: false,
-      medidorToDelete: null,
+      showFormModal: false, // Controla si el modal del formulario está visible
+      selectedMeter: null, // Controla si hay un medidor seleccionado para mostrar detalles
     };
   },
   created() {
     this.loadDummyData();
   },
   methods: {
+    // Cargar datos predefinidos
     loadDummyData() {
-      // Datos de medidores "quemados"
-      this.medidores = [
-        { idMedidor: "1", name: "Medidor 1", location: "Zona A", status: "activo", installDate: "2025-01-20", description: "Medidor principal de la zona A" },
-        { idMedidor: "2", name: "Medidor 2", location: "Zona B", status: "inactivo", installDate: "2025-01-22", description: "Medidor auxiliar en la zona B" },
+      this.meters = [
+        {
+          idMeter: "1",
+          name: "Medidor 1",
+          location: "Zona A",
+          type: "Tipo A",
+        },
+        {
+          idMeter: "2",
+          name: "Medidor 2",
+          location: "Zona B",
+          type: "Tipo B",
+        },
       ];
     },
-    submitForm() {
-      // Función para agregar o editar medidor
-      if (this.editing) {
-        const index = this.medidores.findIndex(medidor => medidor.idMedidor === this.currentMedidor.idMedidor);
-        if (index !== -1) {
-          this.medidores[index] = { ...this.currentMedidor }; // Actualizar
-        }
-      } else {
-        this.currentMedidor.idMedidor = (this.medidores.length + 1).toString(); // Asignar nuevo ID
-        this.currentMedidor.installDate = new Date().toISOString().slice(0, 10); // Fecha actual
-        this.medidores.push({ ...this.currentMedidor }); // Agregar nuevo
-      }
-      this.resetForm();
-    },
-    resetForm() {
-      this.currentMedidor = {
-        idMedidor: "",
-        name: "",
-        location: "",
-        status: "activo",
-        installDate: "",
-        description: "",
-      };
-      this.showForm = false;
-      this.editing = false;
-    },
+    // Mostrar el modal del formulario para agregar
     showAddForm() {
       this.resetForm();
-      this.showForm = true;
+      this.showFormModal = true;
     },
-    cancelEdit() {
-      this.resetForm();
-    },
-    viewDetails(id) {
-      this.selectedMedidor = this.medidores.find(medidor => medidor.idMedidor === id);
-    },
-    editMedidor(id) {
+    // Configurar el formulario para editar un Medidor
+    editMeter(id) {
       this.editing = true;
-      this.currentMedidor = { ...this.medidores.find(medidor => medidor.idMedidor === id) };
-      this.showForm = true;
+      this.currentMeter = { ...this.meters.find(meter => meter.idMeter === id) };
+      this.showFormModal = true;
     },
+    // Guardar o agregar un Medidor
+    submitForm() {
+      if (this.editing) {
+        const index = this.meters.findIndex(meter => meter.idMeter === this.currentMeter.idMeter);
+        if (index !== -1) this.meters[index] = { ...this.currentMeter };
+      } else {
+        this.currentMeter.idMeter = (this.meters.length + 1).toString();
+        this.meters.push({ ...this.currentMeter });
+      }
+      this.closeFormModal();
+    },
+    // Cerrar el modal del formulario
+    closeFormModal() {
+      this.resetForm();
+      this.showFormModal = false;
+    },
+    // Reiniciar el formulario
+    resetForm() {
+      this.currentMeter = {
+        idMeter: "",
+        name: "",
+        location: "",
+        type: "",
+      };
+      this.editing = false;
+    },
+    // Mostrar detalles de un Medidor
+    viewDetails(id) {
+      this.selectedMeter = this.meters.find(meter => meter.idMeter === id);
+    },
+    // Confirmar eliminación de un Medidor
     confirmDelete(id) {
-      this.medidorToDelete = id;
-      this.showModal = true;
-    },
-    deleteMedidor(id) {
-      this.medidores = this.medidores.filter(medidor => medidor.idMedidor !== id);
-      this.showModal = false;
-      this.medidorToDelete = null;
-    },
-    cancelDelete() {
-      this.showModal = false;
-      this.medidorToDelete = null;
-    },
-    goBack() {
-      this.$router.push({ name: "Home" });
+      this.meters = this.meters.filter(meter => meter.idMeter !== id);
     },
   },
 };
