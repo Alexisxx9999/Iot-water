@@ -14,20 +14,35 @@
       <form @submit.prevent="submitForm" class="form-principal">
         <div class="inf">
           <div class="form-group">
-            <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
+            <label for="idMascota" class="title">Nombre de la Mascota</label>
+            <input
+              type="text"
+              name="idMascota"
+              id="idMascota"
+              required
+              v-model="currentPet.idMascota"
+              class="form-control"
+            />
           </div>
           <div class="form-group">
-            <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
+            <label for="description" class="title">Información adicional</label>
+            <input
+              type="text"
+              id="description"
+              v-model="currentPet.descripcion"
+              class="form-control"
+            />
           </div>
           <div class="form-group">
-            <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
-          </div>
-          <div class="form-group">
-            <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
+            <label for="idUsuario" class="title">Nombre del Dueño</label>
+            <input
+              type="text"
+              name="idUsuario"
+              id="idusuario"
+              required
+              v-model="currentPet.idUsuario"
+              class="form-control"
+            />
           </div>
           <div class="form-buttons">
             <button type="submit" class="btn btn-primary">
