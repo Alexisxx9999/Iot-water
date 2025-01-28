@@ -308,7 +308,6 @@ export default {
 
 .content-total {
   display: flex;
-  height: 100vh; /* Asegurarse de que ocupa toda la altura de la ventana */
 }
 
 .toggle-sidebar {
