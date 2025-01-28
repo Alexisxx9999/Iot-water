@@ -235,99 +235,321 @@ export default {
 </script>
 
 <style scoped>
+/* Fondo animado con gradiente */
 .dashboard {
-  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco y semi-transparente */
-  padding: 2%; /* Espaciado interno relativo */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  background: linear-gradient(135deg, #c4c4c4, #0281ff);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+  padding: 2%;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  min-height: 100vh; /* Cubrir toda la pantalla */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Encabezado del Dashboard */
 .header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 5%; /* Ajuste en porcentaje para ser relativo al tamaño de la pantalla */
+  color: white;
 }
 
 .header h1 {
-  font-size: 2.2rem; /* Tamaño de fuente relativo */
+  font-size: 3rem; /* Tamaño base para pantallas grandes */
+  font-weight: 700;
 }
 
 .header p {
-  font-size: 1.1rem; /* Tamaño de fuente relativo */
-  color: #555;
+  font-size: 1.5rem; /* Tamaño base para pantallas grandes */
+  font-weight: 400;
 }
 
+/* Media Queries para tamaños de pantallas más pequeñas */
+@media (max-width: 1400px) {
+  .header h1 {
+    font-size: 2.8rem; /* Ajuste para pantallas grandes de PCs */
+  }
+
+  .header p {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header h1 {
+    font-size: 2.5rem; /* Ajuste para pantallas de tamaño medio */
+  }
+
+  .header p {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header h1 {
+    font-size: 2.2rem; /* Ajuste para tabletas y pantallas más pequeñas */
+  }
+
+  .header p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.8rem; /* Ajuste para móviles */
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.6rem; /* Ajuste para móviles más pequeños */
+  }
+
+  .header p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Ajustes para pantallas ultra grandes (hasta 4K) */
+@media (min-width: 2560px) {
+  .header h1 {
+    font-size: 4.5rem; /* Más grande para pantallas 4K */
+  }
+
+  .header p {
+    font-size: 2rem;
+  }
+}
+
+/* Contenedor de tarjetas */
 .card-container {
   display: flex;
-  flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan */
-  justify-content: space-between;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px 0;
+  gap: 20px;
 }
 
 .card-container > * {
-  flex: 1 1 200px; /* Flexibilidad para adaptarse a diferentes tamaños */
-  margin: 10px; /* Espacio entre tarjetas */
-  transition: transform 0.3s; /* Efecto de transición */
+  flex: 1 1 calc(25% - 20px); /* Cuatro columnas con espacio entre ellas en pantallas grandes */
+  max-width: 300px;
+  min-width: 250px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 12px;
 }
 
 .card-container > *:hover {
-  transform: scale(1.05); /* Efecto de aumento al pasar el mouse */
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 1400px) {
+  .card-container > * {
+    flex: 1 1 calc(33.33% - 20px); /* Tres columnas en pantallas grandes de PCs */
+  }
+}
+
+@media (max-width: 1200px) {
+  .card-container > * {
+    flex: 1 1 calc(33.33% - 20px); /* Tres columnas en pantallas medianas */
+  }
+}
+
+@media (max-width: 1024px) {
+  .card-container > * {
+    flex: 1 1 calc(50% - 20px); /* Dos columnas en tabletas */
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container > * {
+    flex: 1 1 100%; /* Una columna en pantallas de móviles */
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container > * {
+    flex: 1 1 100%; /* Una columna para teléfonos móviles más pequeños */
+  }
+}
+/* Gráficas */
 .charts {
   display: flex;
-  flex-wrap: wrap; /* Permitir que las gráficas se envuelvan */
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: flex-end; /* Alinea las gráficas a la derecha */
+  gap: 30px; /* Espacio entre las gráficas */
+  margin: 30px 0;
 }
 
 .chart-container {
-  flex: 1 1 45%; /* Ocupa el 45% del ancho, permitiendo espacio */
-  margin-bottom: 20px; /* Espacio entre las gráficas */
+  flex: 1 1 calc(50% - 20px); /* Dos columnas en pantallas grandes */
+  max-width: 600px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .estadistica {
-  height: 200px; /* Altura más pequeña para las gráficas */
+  height: 250px;
 }
 
-.map {
-  height: 400px; /* Altura del mapa */
-  width: 100%; /* Ancho completo */
-  margin-top: 20px; /* Margen superior */
-}
-
-h3 {
-  color: #555;
-  margin: 20px 0;
-  font-size: 1.5rem; /* Tamaño de fuente relativo */
-  font-weight: 600;
-}
-
-/* Media Queries para Responsividad */
-@media (max-width: 768px) {
-  .header h1 {
-    font-size: 1.8rem; /* Tamaño de fuente para pantallas pequeñas */
-  }
-
-  .header p {
-    font-size: 1rem; /* Tamaño de fuente para pantallas pequeñas */
-  }
-
+@media (max-width: 1400px) {
   .charts {
-    flex-direction: column; /* Gráficas apiladas en pantallas pequeñas */
+    justify-content: center; /* Centra las gráficas en pantallas grandes pero no tan grandes */
   }
 
   .chart-container {
-    flex: 1 1 100%; /* Cada gráfica ocupa el 100% del ancho */
+    flex: 1 1 calc(33.33% - 20px); /* Tres columnas en pantallas de PCs grandes */
   }
 }
 
-@media (min-width: 1440px) {
-  .header h1 {
-    font-size: 2.5rem; /* Tamaño de fuente para pantallas grandes */
+@media (max-width: 1200px) {
+  .charts {
+    justify-content: center; /* Centra las gráficas */
   }
 
-  .header p {
-    font-size: 1.3rem; /* Tamaño de fuente para pantallas grandes */
+  .chart-container {
+    flex: 1 1 calc(33.33% - 20px); /* Tres columnas en pantallas medianas */
   }
 }
+
+@media (max-width: 1024px) {
+  .charts {
+    justify-content: center; /* Centra las gráficas en tabletas */
+  }
+
+  .chart-container {
+    flex: 1 1 calc(50% - 20px); /* Dos columnas en tabletas */
+  }
+}
+
+@media (max-width: 768px) {
+  .charts {
+    flex-direction: column;
+    justify-content: center; /* Centra las gráficas en pantallas pequeñas */
+    gap: 15px;
+  }
+
+  .chart-container {
+    flex: 1 1 100%; /* Una columna en pantallas de móviles */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .charts {
+    flex-direction: column;
+    justify-content: center; /* Centra las gráficas en pantallas muy pequeñas */
+    gap: 10px;
+  }
+
+  .chart-container {
+    flex: 1 1 100%; /* Una columna en teléfonos móviles más pequeños */
+    max-width: 100%;
+  }
+}
+/* Mapa */
+.map {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+h3 {
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+/* Media Queries para pantallas grandes */
+@media (max-width: 1400px) {
+  .map {
+    height: 350px; /* Ajusta la altura del mapa en pantallas grandes */
+  }
+
+  h3 {
+    font-size: 2rem; /* Ajusta el tamaño de los títulos */
+  }
+}
+
+@media (max-width: 1200px) {
+  .map {
+    height: 300px; /* Ajusta la altura del mapa en pantallas medianas */
+  }
+
+  h3 {
+    font-size: 1.8rem; /* Ajusta el tamaño de los títulos */
+  }
+}
+
+@media (max-width: 1024px) {
+  .map {
+    height: 250px; /* Ajusta la altura del mapa en pantallas de tabletas */
+  }
+
+  h3 {
+    font-size: 1.6rem; /* Ajusta el tamaño de los títulos */
+  }
+}
+
+@media (max-width: 768px) {
+  .map {
+    height: 200px; /* Ajusta la altura del mapa en pantallas de teléfonos móviles */
+  }
+
+  h3 {
+    font-size: 1.4rem; /* Ajusta el tamaño de los títulos */
+  }
+
+  /* Asegura que los gráficos y otros elementos se acomoden bien */
+  .charts {
+    flex-direction: column;
+  }
+
+  .chart-container {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .card-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map {
+    height: 180px; /* Ajusta la altura del mapa en teléfonos móviles pequeños */
+  }
+
+  h3 {
+    font-size: 1.2rem; /* Ajusta el tamaño de los títulos */
+  }
+}
+
 </style>

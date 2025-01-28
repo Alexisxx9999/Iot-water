@@ -2,7 +2,7 @@
   <div class="content-total">
     <nav class="nav-bar">
       <router-link to="/dashboard" class="logo">
-        <img src="../assets/logo.png" alt="Logo" />
+        <img src="../assets/agua4.png" alt="Logo" />
         <span class="logo-name">IOT WATER</span>
       </router-link>
 
@@ -89,6 +89,55 @@ export default {
   background-color: rgba(240, 240, 240, 0.9); /* Cambia el fondo al pasar el cursor */
 }
 
+/* Media Queries para pantallas grandes */
+@media (max-width: 1400px) {
+  .nav-bar {
+    height: 70px; /* Aumenta la altura en pantallas más grandes */
+  }
+}
+
+@media (max-width: 1200px) {
+  .nav-bar {
+    height: 60px; /* Ajusta la altura de la barra de navegación */
+  }
+}
+
+@media (max-width: 1024px) {
+  .nav-bar {
+    padding: 5px 15px; /* Ajusta el espaciado en pantallas medianas */
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-bar {
+    height: 50px; /* Reduce la altura de la barra de navegación en pantallas móviles */
+    padding: 5px 10px; /* Ajusta el espaciado en pantallas pequeñas */
+  }
+
+  .nav-bar .logo {
+    font-size: 1.5rem; /* Reduce el tamaño del logo en pantallas móviles */
+  }
+
+  .nav-bar .menu {
+    font-size: 1rem; /* Ajusta el tamaño de los elementos del menú */
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-bar {
+    height: 45px; /* Reduce la altura aún más para pantallas muy pequeñas */
+    padding: 5px 8px; /* Ajusta el espaciado para dispositivos más pequeños */
+  }
+
+  .nav-bar .logo {
+    font-size: 1.2rem; /* Logo aún más pequeño */
+  }
+
+  .nav-bar .menu {
+    font-size: 0.9rem; /* Tamaño de los elementos del menú más pequeños */
+  }
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -103,6 +152,37 @@ export default {
 .logo img {
   height: 40px; /* Ajustar el tamaño del logo */
   margin-right: 5px;
+}
+
+/* Media Queries para pantallas grandes */
+@media (max-width: 1400px) {
+  .logo img {
+    height: 50px; /* Aumenta el tamaño del logo en pantallas grandes */
+  }
+}
+
+@media (max-width: 1200px) {
+  .logo img {
+    height: 45px; /* Ajusta el tamaño del logo para pantallas medianas */
+  }
+}
+
+@media (max-width: 1024px) {
+  .logo img {
+    height: 40px; /* Mantiene el tamaño estándar del logo */
+  }
+}
+
+@media (max-width: 768px) {
+  .logo img {
+    height: 35px; /* Reduce el tamaño del logo en pantallas móviles */
+  }
+}
+
+@media (max-width: 480px) {
+  .logo img {
+    height: 30px; /* Reduce aún más el tamaño del logo para pantallas muy pequeñas */
+  }
 }
 
 .user-menu {
@@ -159,6 +239,65 @@ export default {
   padding: 10px 15px;
   text-decoration: none;
 }
+
+/* Media Queries para pantallas grandes */
+@media (max-width: 1400px) {
+  .menu-horizontal {
+    gap: 20px; /* Ajusta el espacio entre los elementos */
+  }
+
+  .menu-vertical {
+    width: 200px; /* Aumenta el ancho del menú vertical para pantallas más grandes */
+  }
+}
+
+/* Media Queries para pantallas medianas */
+@media (max-width: 1024px) {
+  .menu-horizontal {
+    gap: 15px; /* Reduce el espacio entre los elementos */
+  }
+
+  .menu-vertical {
+    width: 150px; /* Ajusta el ancho del menú vertical */
+  }
+}
+
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu-horizontal {
+    flex-direction: column; /* Cambia a vista vertical */
+    gap: 10px; /* Reduce el espacio entre los elementos */
+  }
+
+  .menu-vertical {
+    width: 100%; /* Menú vertical se ajusta al 100% de ancho */
+    position: static; /* El menú vertical se posiciona debajo del item */
+  }
+
+  .menu-horizontal > li {
+    width: 100%; /* Asegura que cada elemento ocupe el 100% */
+  }
+
+  .menu-horizontal > li > a {
+    padding: 8px 12px; /* Ajusta el espaciado */
+  }
+}
+
+/* Media Queries para dispositivos móviles pequeños */
+@media (max-width: 480px) {
+  .menu-horizontal {
+    flex-direction: column; /* Ajusta a columna en pantallas muy pequeñas */
+  }
+
+  .menu-vertical {
+    width: 100%; /* El menú vertical ocupa el 100% del ancho */
+  }
+
+  .menu-horizontal > li > a {
+    padding: 6px 10px; /* Reduce el espaciado en pantallas pequeñas */
+  }
+}
+
 
 /* Estilos del menú lateral */
 * {

@@ -1,28 +1,23 @@
 <template>
   <div class="login-container">
+    <!-- Contenedor de la imagen (eliminado) -->
+     <img src="../assets/agua4.png">
     <div class="login-form">
-      <div class="login-image">
-        <img src="../assets/logo.png" alt="" />
-      </div>
-      <div class="login-fields">
-        <form @submit.prevent="login">
-          <h2>Bienvenido</h2>
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" v-model="email" required />
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" v-model="password" required />
-          </div>
-
-          <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-        </form>
-        <p class="register">
-          No tienes una cuenta aun ?
-          <router-link to="/register">Registrate</router-link>
-        </p>
-      </div>
+      <form @submit.prevent="login">
+        <h2>Bienvenido</h2>
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" v-model="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" v-model="password" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+      </form>
+      <p class="register">
+        ¿No tienes cuenta? <router-link to="/register">Regístrate</router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -36,14 +31,10 @@ export default {
     return {
       email: "",
       password: "",
-      rememberMe: false,
-      error: false,
-      errorMessage: "",
     };
   },
   methods: {
     login() {
-      // Datos quemados para validación
       const validEmail = "usuario@example.com";
       const validPassword = "123456";
 
@@ -55,7 +46,6 @@ export default {
           timer: 1500,
         });
 
-        // Redirigir a la página principal
         this.$router.push("/dashboard");
       } else {
         Swal.fire({
@@ -79,49 +69,16 @@ export default {
   padding: 20px;
   box-sizing: border-box;
   color: white;
-  background-color: #c4e2fe;
+  background: linear-gradient(to bottom, #1E90FF, #FFFFFF); /* Degradado */
 }
-.img {
-  padding: 10px;
-  margin-bottom: 20px;
-  height: 80px;
-  width: 85%;
-}
-.login-container a {
-  text-decoration: none;
-}
-.register a {
-  color: skyblue;
-}
+
 .login-form {
-  display: flex;
   background-color: #233a63;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  overflow: hidden;
-  max-width: 850px;
-  width: 100%;
-}
-
-.login-image {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f0f0f0;
-}
-.login-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.login-fields {
-  flex: 1;
   padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  max-width: 400px;
+  width: 100%;
 }
 
 .form-group {
@@ -156,24 +113,18 @@ export default {
   background-color: #61c2f0;
 }
 
-.login-fields h1 {
+.login-form h2 {
   margin-bottom: 20px;
+  text-align: center;
 }
 
-.login-fields p {
+.register {
   margin-top: 20px;
   text-align: center;
 }
 
-@media (max-width: 768px) {
-  .login-form {
-    flex-direction: column;
-  }
-
-  .login-image {
-    margin-top: 400px;
-    width: 100%;
-    background-size: cover;
-  }
+.register a {
+  color: skyblue;
+  text-decoration: none;
 }
 </style>
