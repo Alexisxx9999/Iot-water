@@ -130,14 +130,6 @@
             class="form-control"
           ></textarea>
         </div>
-        <div class="form-buttons">
-          <button type="submit" class="btn btn-primary">
-            {{ editing ? "Guardar" : "Agregar" }}
-          </button>
-          <button type="button" @click="closeFormModal" class="btn btn-secondary">
-            Cancelar
-          </button>
-        </div>
       </form>
     </Modal>
 

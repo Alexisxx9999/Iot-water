@@ -72,7 +72,6 @@ export default {
   font-size: 20px;
   margin: 8px 0;
   float: left;
-  padding: 5px;
 }
 
 .card-footer {

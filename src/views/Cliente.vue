@@ -31,14 +31,7 @@
             <label for="clientPhone" class="title">Teléfono del Cliente</label>
             <input type="text" id="clientPhone" v-model="currentClient.phone" />
           </div>
-          <div class="form-buttons">
-            <button type="submit" class="btn btn-primary">
-              {{ editing ? "Guardar" : "Agregar" }}
-            </button>
-            <button type="button" @click="cancelEdit" class="btn btn-secondary">
-              Cancelar
-            </button>
-          </div>
+
         </div>
       </form>
     </div>
