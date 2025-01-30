@@ -139,19 +139,6 @@ tr:hover {
 .actions i:hover {
   color: #007bff;
 }
-
-.back-button {
-  background-color: #070055;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 15px;
-  cursor: pointer;
-  position: relative;
-  left: 90%;
-  margin-top: 20px;
-}
-
 .back-button:hover {
   background-color: rgb(0, 1, 77);
 }

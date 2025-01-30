@@ -16,7 +16,7 @@
         <div class="inf">
           <div class="form-group">
             <label for="idgateway" class="title">Información adicional</label>
-            <input type="text" id="idgateway" />
+            <input type="text" id="idgateway" required />
           </div>
           <div class="form-group">
             <label for="idgateway" class="title">Información adicional</label>
@@ -68,12 +68,13 @@
       </table>
     </div>
 
-    <!-- Modal para el formulario de agregar/editar -->
+    <!-- Modal para el formulario de agregar/editar (del primer código) -->
     <Modal
       v-if="showFormModal"
       :show="showFormModal"
       :title="editing ? 'Editar Gateway' : 'Agregar Gateway'"
       @cancel="closeFormModal"
+      @confirm="submitForm"
     >
       <form @submit.prevent="submitForm" class="form-principal">
         <div class="form-group">
@@ -106,29 +107,11 @@
           />
         </div>
         <div class="form-group">
-          <label for="ipAddress">Dirección IP</label>
-          <input
-            type="text"
-            id="ipAddress"
-            v-model="currentGateway.ipAddress"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="form-group">
           <label for="status">Estado</label>
           <select id="status" v-model="currentGateway.status" class="form-control">
             <option value="activo">Activo</option>
             <option value="inactivo">Inactivo</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label for="description">Descripción</label>
-          <textarea
-            id="description"
-            v-model="currentGateway.description"
-            class="form-control"
-          ></textarea>
         </div>
       </form>
     </Modal>
@@ -140,9 +123,7 @@
         <p><strong>Fecha de Instalación:</strong> {{ selectedGateway.installDate }}</p>
         <p><strong>Nombre:</strong> {{ selectedGateway.name }}</p>
         <p><strong>Ubicación:</strong> {{ selectedGateway.location }}</p>
-        <p><strong>Dirección IP:</strong> {{ selectedGateway.ipAddress }}</p>
         <p><strong>Estado:</strong> {{ selectedGateway.status }}</p>
-        <p><strong>Descripción:</strong> {{ selectedGateway.description }}</p>
         <button @click="selectedGateway = null" class="back-button">Cerrar</button>
       </div>
     </div>
@@ -159,7 +140,7 @@ export default {
   },
   data() {
     return {
-      gateways: [], // Lista de gateways
+      gateways: [],
       currentGateway: {
         idGateway: "",
         name: "",
@@ -170,15 +151,14 @@ export default {
         description: "",
       },
       editing: false,
-      showFormModal: false, // Controla si el modal del formulario está visible
-      selectedGateway: null, // Controla si hay un Gateway seleccionado para mostrar detalles
+      showFormModal: false,
+      selectedGateway: null,
     };
   },
   created() {
     this.loadDummyData();
   },
   methods: {
-    // Cargar datos predefinidos
     loadDummyData() {
       this.gateways = [
         {
@@ -201,18 +181,15 @@ export default {
         },
       ];
     },
-    // Mostrar el modal del formulario para agregar
     showAddForm() {
       this.resetForm();
       this.showFormModal = true;
     },
-    // Configurar el formulario para editar un Gateway
     editGateway(id) {
       this.editing = true;
       this.currentGateway = { ...this.gateways.find(gateway => gateway.idGateway === id) };
       this.showFormModal = true;
     },
-    // Guardar o agregar un Gateway
     submitForm() {
       if (this.editing) {
         const index = this.gateways.findIndex(gateway => gateway.idGateway === this.currentGateway.idGateway);
@@ -223,12 +200,10 @@ export default {
       }
       this.closeFormModal();
     },
-    // Cerrar el modal del formulario
     closeFormModal() {
       this.resetForm();
       this.showFormModal = false;
     },
-    // Reiniciar el formulario
     resetForm() {
       this.currentGateway = {
         idGateway: "",
@@ -241,11 +216,9 @@ export default {
       };
       this.editing = false;
     },
-    // Mostrar detalles de un Gateway
     viewDetails(id) {
       this.selectedGateway = this.gateways.find(gateway => gateway.idGateway === id);
     },
-    // Confirmar eliminación de un Gateway
     confirmDelete(id) {
       this.gateways = this.gateways.filter(gateway => gateway.idGateway !== id);
     },

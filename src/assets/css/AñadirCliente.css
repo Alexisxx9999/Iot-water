@@ -1,4 +1,4 @@
-/* Estilos generales */
+/* Estilos Generales */
 .content {
   margin: 20px;
   padding: 20px;
@@ -9,8 +9,8 @@
 /* Encabezado */
 .header-container {
   display: flex;
-  flex-direction: column; /* Cambiado a columna para móviles */
-  align-items: center; /* Centrar elementos en dispositivos pequeños */
+  flex-direction: column;
+  align-items: center;
   background-color: #e1e8ed;
   padding: 20px;
   border-radius: 8px;
@@ -19,9 +19,10 @@
 
 .header-container h1 {
   margin: 0;
-  font-size: 24px; /* Tamaño de fuente más pequeño para móviles */
+  font-size: 24px;
 }
 
+/* Botón de Añadir */
 .add-button {
   background-color: #28a745;
   color: #fff;
@@ -29,15 +30,11 @@
   border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
-  margin-top: 10px; /* Espacio en dispositivos pequeños */
+  width: 100%;
 }
 
 .add-button:hover {
   background-color: #218838;
-}
-
-.title2 {
-  text-align: center;
 }
 
 /* Formulario */
@@ -52,10 +49,6 @@
 .form-principal {
   max-width: 850px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .inf {
@@ -80,19 +73,12 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  font-size: 14px;
-  color: #333;
-}
-
-.form-control:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .form-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 10px;
   margin-top: 20px;
 }
 
@@ -104,15 +90,14 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff; /* Fondo blanco para la tabla */
+  background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 th {
-  background-color: #001f3f; /* Azul marino para el encabezado */
-  color: white; /* Texto blanco para contraste */
+  background-color: #001f3f;
+  color: white;
   padding: 12px;
   text-align: left;
 }
@@ -123,23 +108,41 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #e7f3ff; /* Azul claro para filas pares */
+  background-color: #e7f3ff;
 }
 
 tr:hover {
-  background-color: #cce5ff; /* Color al pasar el ratón por encima de las filas */
+  background-color: #cce5ff;
 }
 
-/* Acciones */
-.actions i {
-  margin-right: 10px;
-  cursor: pointer;
+/* Detalles del Usuario, Cliente y Medidor */
+.user-details-container,
+.client-details-container,
+.meter-details-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.actions i:hover {
-  color: #007bff;
+.user-details,
+.client-details,
+.meter-details {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Botón de Cerrar Detalles */
 .back-button {
   background-color: #070055;
   color: #fff;
@@ -147,68 +150,39 @@ tr:hover {
   border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
-  position: relative;
-  left: 90%;
   margin-top: 20px;
+  width: 100%;
 }
 
 .back-button:hover {
   background-color: rgb(0, 1, 77);
 }
 
-/* Estilos responsivos */
+/* Modal de Confirmación */
+.modal-container {
+  /* Agregar estilos específicos para los modales si es necesario */
+}
+
+/* Responsividad */
 @media (max-width: 600px) {
   .header-container {
-    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
-    align-items: center;
+    padding: 15px;
   }
 
   .header-container h1 {
-    font-size: 20px; /* Ajustar tamaño de fuente */
+    font-size: 20px;
   }
 
   .form-principal {
-    padding: 10px; /* Reduce padding en móviles */
+    padding: 10px;
   }
 
   .form-control {
-    font-size: 12px; /* Ajustar tamaño de fuente en móviles */
+    font-size: 12px;
   }
 
   .add-button, .back-button {
-    width: 100%; /* Botones ocupan el ancho completo */
-    margin-top: 10px; /* Espacio entre botones */
-  }
-}
-
-@media (min-width: 601px) and (max-width: 1200px) {
-  .header-container h1 {
-    font-size: 24px; /* Tamaño de fuente mediano */
-  }
-
-  .form-principal {
-    padding: 15px; /* Padding mediano */
-  }
-
-  .form-control {
-    font-size: 14px; /* Tamaño de fuente estándar */
-  }
-
-  .add-button, .back-button {
-    width: auto; /* Botones ocupan solo el espacio necesario */
-  }
-}
-
-@media (min-width: 1201px) {
-  .header-container h1 {
-    font-size: 28px; /* Tamaño de fuente grande para pantallas grandes */
-  }
-
-  .form-principal {
-    padding: 20px; /* Padding estándar */
-  }
-
-  .form-control {
-    font-size: 16px; /* Tamaño de fuente grande para pantallas grandes */
+    width: 100%;
+    margin-top: 10px;
   }
 }
