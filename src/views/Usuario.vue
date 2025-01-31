@@ -11,25 +11,26 @@
       </div>
     </div>
     
+    <!-- Formulario de agregar/editar usuario -->
     <div class="form-container" v-if="showForm">
       <h2 class="title2">{{ editing ? "Editar " : "Agregar " }} Usuario</h2>
       <form @submit.prevent="submitForm" class="form-principal">
         <div class="inf">
           <div class="form-group">
-            <label for="userId" class="title">ID del Usuario</label>
-            <input type="text" id="userId" v-model="currentUser.idUser" />
+            <label for="idUser" class="title">ID del Usuario</label>
+            <input type="text" id="idUser" v-model="currentUser.idUser" required />
           </div>
           <div class="form-group">
-            <label for="userName" class="title">Nombre del Usuario</label>
-            <input type="text" id="userName" v-model="currentUser.name" />
+            <label for="name" class="title">Nombre del Usuario</label>
+            <input type="text" id="name" v-model="currentUser.name" required />
           </div>
           <div class="form-group">
-            <label for="userEmail" class="title">Email</label>
-            <input type="email" id="userEmail" v-model="currentUser.email" />
+            <label for="email" class="title">Email</label>
+            <input type="email" id="email" v-model="currentUser.email" required />
           </div>
           <div class="form-group">
-            <label for="userRole" class="title">Rol</label>
-            <input type="text" id="userRole" v-model="currentUser.role" />
+            <label for="role" class="title">Rol</label>
+            <input type="text" id="role" v-model="currentUser.role" required />
           </div>
           <div class="form-buttons">
             <button type="submit" class="btn btn-primary">
@@ -43,6 +44,7 @@
       </form>
     </div>
 
+    <!-- Tabla de usuarios -->
     <div class="table-container">
       <table>
         <thead>
@@ -70,12 +72,13 @@
       </table>
     </div>
 
-    <!-- Modal para el formulario de agregar/editar -->
+    <!-- Modal para agregar/editar usuario -->
     <Modal
       v-if="showFormModal"
       :show="showFormModal"
       :title="editing ? 'Editar Usuario' : 'Agregar Usuario'"
       @cancel="closeFormModal"
+      @confirm="submitForm"
     >
       <form @submit.prevent="submitForm" class="form-principal">
         <div class="form-group">
@@ -108,14 +111,6 @@
             required
           />
         </div>
-        <div class="form-buttons">
-          <button type="submit" class="btn btn-primary">
-            {{ editing ? "Guardar" : "Agregar" }}
-          </button>
-          <button type="button" @click="closeFormModal" class="btn btn-secondary">
-            Cancelar
-          </button>
-        </div>
       </form>
     </Modal>
 
@@ -130,6 +125,17 @@
         <button @click="selectedUser = null" class="back-button">Cerrar</button>
       </div>
     </div>
+
+    <!-- Modal de Confirmación de eliminación -->
+    <Modal
+      v-if="showDeleteModal"
+      :show="showDeleteModal"
+      title="Confirmar Eliminación"
+      @cancel="closeDeleteModal"
+      @confirm="deleteUser"
+    >
+      <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+    </Modal>
   </div>
 </template>
 
@@ -151,15 +157,17 @@ export default {
         role: "",
       },
       editing: false,
-      showFormModal: false, // Controla si el modal del formulario está visible
-      selectedUser: null, // Controla si hay un usuario seleccionado para mostrar detalles
+      showFormModal: false, // Modal para agregar/editar usuario
+      selectedUser: null, // Usuario seleccionado para mostrar detalles
+      showDeleteModal: false, // Modal de confirmación de eliminación
+      userToDelete: null, // Almacena el ID del usuario a eliminar
     };
   },
   created() {
     this.loadDummyData();
   },
   methods: {
-    // Cargar datos predefinidos
+    // Cargar datos dummy para los usuarios
     loadDummyData() {
       this.users = [
         {
@@ -176,18 +184,18 @@ export default {
         },
       ];
     },
-    // Mostrar el modal del formulario para agregar
+    // Mostrar el modal para agregar un nuevo usuario
     showAddForm() {
       this.resetForm();
       this.showFormModal = true;
     },
-    // Configurar el formulario para editar un Usuario
+    // Configurar el formulario para editar un usuario
     editUser(id) {
       this.editing = true;
       this.currentUser = { ...this.users.find(user => user.idUser === id) };
       this.showFormModal = true;
     },
-    // Guardar o agregar un Usuario
+    // Enviar el formulario (agregar o editar)
     submitForm() {
       if (this.editing) {
         const index = this.users.findIndex(user => user.idUser === this.currentUser.idUser);
@@ -213,13 +221,24 @@ export default {
       };
       this.editing = false;
     },
-    // Mostrar detalles de un Usuario
+    // Mostrar detalles de un usuario
     viewDetails(id) {
       this.selectedUser = this.users.find(user => user.idUser === id);
     },
-    // Confirmar eliminación de un Usuario
+    // Confirmar eliminación de un usuario
     confirmDelete(id) {
-      this.users = this.users.filter(user => user.idUser !== id);
+      this.userToDelete = id;
+      this.showDeleteModal = true;
+    },
+    // Eliminar un usuario
+    deleteUser() {
+      this.users = this.users.filter(user => user.idUser !== this.userToDelete);
+      this.closeDeleteModal();
+    },
+    // Cerrar el modal de confirmación de eliminación
+    closeDeleteModal() {
+      this.showDeleteModal = false;
+      this.userToDelete = null;
     },
   },
 };

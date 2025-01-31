@@ -30,6 +30,7 @@
   padding: 10px 15px;
   cursor: pointer;
   margin-top: 10px; /* Espacio en dispositivos pequeños */
+  width: 100%; /* Botón ocupa el ancho completo en móviles */
 }
 
 .add-button:hover {
@@ -147,9 +148,8 @@ tr:hover {
   border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
-  position: relative;
-  left: 90%;
-  margin-top: 20px;
+  margin-top: 20px; /* Espacio en dispositivos pequeños */
+  width: 100%; /* Botón ocupa el ancho completo en móviles */
 }
 
 .back-button:hover {
@@ -159,8 +159,7 @@ tr:hover {
 /* Estilos responsivos */
 @media (max-width: 600px) {
   .header-container {
-    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
-    align-items: center;
+    padding: 15px; /* Reduce padding en móviles */
   }
 
   .header-container h1 {

@@ -73,75 +73,29 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 10px; /* Espaciado ajustado */
-  background-color: #fff;
-  border-bottom: 1px solid #ccc;
+  padding: 10px 20px; /* Espaciado ajustado */
+  background-color: #0a192f; /* Fondo oscuro para resaltar los colores neon */
+  border-bottom: 2px solid #00d1ff; /* Borde neon azul */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 60px; /* Altura ajustada */
   z-index: 1000;
-  transition: background-color 0.3s; /* Animación al cambiar el color de fondo */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Animaciones suaves */
+  box-shadow: 0 2px 10px rgba(0, 209, 255, 0.3); /* Sombra neon azul */
 }
 
 .nav-bar:hover {
-  background-color: rgba(240, 240, 240, 0.9); /* Cambia el fondo al pasar el cursor */
+  background-color: #0a2342; /* Cambia el fondo al pasar el cursor */
+  box-shadow: 0 4px 15px rgba(0, 209, 255, 0.5); /* Sombra más pronunciada al pasar el cursor */
 }
 
-/* Media Queries para pantallas grandes */
-@media (max-width: 1400px) {
-  .nav-bar {
-    height: 70px; /* Aumenta la altura en pantallas más grandes */
-  }
-}
-
-@media (max-width: 1200px) {
-  .nav-bar {
-    height: 60px; /* Ajusta la altura de la barra de navegación */
-  }
-}
-
-@media (max-width: 1024px) {
-  .nav-bar {
-    padding: 5px 15px; /* Ajusta el espaciado en pantallas medianas */
-  }
-}
-
-@media (max-width: 768px) {
-  .nav-bar {
-    height: 50px; /* Reduce la altura de la barra de navegación en pantallas móviles */
-    padding: 5px 10px; /* Ajusta el espaciado en pantallas pequeñas */
-  }
-
-  .nav-bar .logo {
-    font-size: 1.5rem; /* Reduce el tamaño del logo en pantallas móviles */
-  }
-
-  .nav-bar .menu {
-    font-size: 1rem; /* Ajusta el tamaño de los elementos del menú */
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-bar {
-    height: 45px; /* Reduce la altura aún más para pantallas muy pequeñas */
-    padding: 5px 8px; /* Ajusta el espaciado para dispositivos más pequeños */
-  }
-
-  .nav-bar .logo {
-    font-size: 1.2rem; /* Logo aún más pequeño */
-  }
-
-  .nav-bar .menu {
-    font-size: 0.9rem; /* Tamaño de los elementos del menú más pequeños */
-  }
-}
-
+/* Estilos del logo */
 .logo {
   display: flex;
   align-items: center;
-  transition: transform 0.3s, opacity 0.3s; /* Animación para el logo */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Animación para el logo */
 }
 
 .logo:hover {
@@ -151,40 +105,17 @@ export default {
 
 .logo img {
   height: 40px; /* Ajustar el tamaño del logo */
-  margin-right: 5px;
+  margin-right: 10px; /* Espacio entre el logo y el texto */
 }
 
-/* Media Queries para pantallas grandes */
-@media (max-width: 1400px) {
-  .logo img {
-    height: 50px; /* Aumenta el tamaño del logo en pantallas grandes */
-  }
+.logo-name {
+  font-size: 1.5rem; /* Tamaño del texto del logo */
+  font-weight: bold;
+  color: #00d1ff; /* Color neon azul para el texto del logo */
+  text-shadow: 0 0 5px #00d1ff, 0 0 10px #00d1ff; /* Efecto neon */
 }
 
-@media (max-width: 1200px) {
-  .logo img {
-    height: 45px; /* Ajusta el tamaño del logo para pantallas medianas */
-  }
-}
-
-@media (max-width: 1024px) {
-  .logo img {
-    height: 40px; /* Mantiene el tamaño estándar del logo */
-  }
-}
-
-@media (max-width: 768px) {
-  .logo img {
-    height: 35px; /* Reduce el tamaño del logo en pantallas móviles */
-  }
-}
-
-@media (max-width: 480px) {
-  .logo img {
-    height: 30px; /* Reduce aún más el tamaño del logo para pantallas muy pequeñas */
-  }
-}
-
+/* Estilos del menú de usuario */
 .user-menu {
   display: flex;
   align-items: center;
@@ -194,6 +125,8 @@ export default {
   list-style: none;
   display: flex;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .menu-horizontal > li {
@@ -204,100 +137,53 @@ export default {
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  color: black;
+  color: #00d1ff; /* Color neon azul para el texto del menú */
   text-decoration: none;
-  transition: color 0.3s, transform 0.2s; /* Animación de color y transformación */
+  transition: color 0.3s ease, transform 0.2s ease; /* Animación de color y transformación */
+  text-shadow: 0 0 5px #00d1ff, 0 0 10px #00d1ff; /* Efecto neon */
 }
 
 .menu-horizontal > li > a:hover {
-  color: #007bff; /* Cambia el color al pasar el cursor */
+  color: #00ff88; /* Cambia el color al pasar el cursor (neon verde) */
+  text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88; /* Efecto neon al pasar el cursor */
   transform: scale(1.05); /* Efecto de aumento al pasar el cursor */
-}
-
-.menu-horizontal > li:hover .menu-vertical {
-  display: block;
 }
 
 .menu-vertical {
   position: absolute;
   display: none;
   list-style: none;
-  width: 163px;
-  background-color: rgba(169, 169, 169, 0.5);
+  width: 160px;
+  background-color: #0a2342; /* Fondo oscuro para el menú vertical */
   z-index: 100; /* Asegúrate que esté sobre otros elementos */
-  transition: opacity 0.3s; /* Animación de opacidad */
+  transition: opacity 0.3s ease; /* Animación de opacidad */
+  top: 100%; /* Posición debajo del elemento padre */
+  left: 0;
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 209, 255, 0.3); /* Sombra neon azul */
+}
+
+.menu-horizontal > li:hover .menu-vertical {
+  display: block; /* Muestra el menú vertical al pasar el cursor */
 }
 
 .menu-vertical li:hover {
-  background-color: rgba(169, 169, 169, 0.5);
+  background-color: #00d1ff; /* Cambia el fondo al pasar el cursor (neon azul) */
 }
 
 .menu-vertical li a {
   display: flex;
   align-items: center;
-  color: black;
+  color: #00d1ff; /* Color neon azul para el texto del menú vertical */
   padding: 10px 15px;
   text-decoration: none;
+  text-shadow: 0 0 5px #00d1ff, 0 0 10px #00d1ff; /* Efecto neon */
 }
 
-/* Media Queries para pantallas grandes */
-@media (max-width: 1400px) {
-  .menu-horizontal {
-    gap: 20px; /* Ajusta el espacio entre los elementos */
-  }
-
-  .menu-vertical {
-    width: 200px; /* Aumenta el ancho del menú vertical para pantallas más grandes */
-  }
+.menu-vertical li a:hover {
+  color: #00ff88; /* Cambia el color al pasar el cursor (neon verde) */
+  text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88; /* Efecto neon al pasar el cursor */
 }
-
-/* Media Queries para pantallas medianas */
-@media (max-width: 1024px) {
-  .menu-horizontal {
-    gap: 15px; /* Reduce el espacio entre los elementos */
-  }
-
-  .menu-vertical {
-    width: 150px; /* Ajusta el ancho del menú vertical */
-  }
-}
-
-/* Media Queries para pantallas pequeñas */
-@media (max-width: 768px) {
-  .menu-horizontal {
-    flex-direction: column; /* Cambia a vista vertical */
-    gap: 10px; /* Reduce el espacio entre los elementos */
-  }
-
-  .menu-vertical {
-    width: 100%; /* Menú vertical se ajusta al 100% de ancho */
-    position: static; /* El menú vertical se posiciona debajo del item */
-  }
-
-  .menu-horizontal > li {
-    width: 100%; /* Asegura que cada elemento ocupe el 100% */
-  }
-
-  .menu-horizontal > li > a {
-    padding: 8px 12px; /* Ajusta el espaciado */
-  }
-}
-
-/* Media Queries para dispositivos móviles pequeños */
-@media (max-width: 480px) {
-  .menu-horizontal {
-    flex-direction: column; /* Ajusta a columna en pantallas muy pequeñas */
-  }
-
-  .menu-vertical {
-    width: 100%; /* El menú vertical ocupa el 100% del ancho */
-  }
-
-  .menu-horizontal > li > a {
-    padding: 6px 10px; /* Reduce el espaciado en pantallas pequeñas */
-  }
-}
-
 
 /* Estilos del menú lateral */
 * {
@@ -316,7 +202,7 @@ export default {
 
 .sidebar {
   width: 200px; /* Ancho más espacioso para la barra lateral */
-  background: rgb(0, 26, 49);
+  background: #0a192f; /* Fondo oscuro para la barra lateral */
   position: fixed;
   z-index: 100;
   height: 100vh; /* Altura total de la barra lateral */
@@ -324,6 +210,8 @@ export default {
   flex-direction: column;
   top: 60px; /* Alinear con la barra de navegación */
   transition: transform 0.3s ease; /* Transición suave */
+  border-right: 2px solid #00d1ff; /* Borde neon azul */
+  box-shadow: 0 0 10px rgba(0, 209, 255, 0.3); /* Sombra neon azul */
 }
 
 .sidebar.is-hidden {
@@ -346,24 +234,29 @@ export default {
   width: 100%;
   display: flex;
   text-decoration: none;
-  color: white;
+  color: #00d1ff; /* Color neon azul para el texto del menú lateral */
   padding: 10px 15px;
   border-radius: 10px;
   align-items: center;
-  transition: background 0.3s, color 0.3s; /* Animación de fondo y color */
+  transition: background 0.3s, color 0.3s, text-shadow 0.3s; /* Animación de fondo, color y brillo */
+  text-shadow: 0 0 5px #00d1ff, 0 0 10px #00d1ff; /* Efecto neon */
 }
 
-.sidebar .Navbar li:hover a {
-  background: rgba(150, 175, 198, 1);
-  color: #fff;
+.sidebar .Navbar li a:hover {
+  background: rgba(0, 209, 255, 0.1); /* Fondo semi-transparente al pasar el cursor */
+  color: #00ff88; /* Cambia el color al pasar el cursor (neon verde) */
+  text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88; /* Efecto neon al pasar el cursor */
 }
 
 .sidebar .Navbar li a i {
   margin-right: 5px; /* Espacio entre el icono y el texto */
+  color: #00d1ff; /* Color neon azul para los iconos */
+  text-shadow: 0 0 5px #00d1ff, 0 0 10px #00d1ff; /* Efecto neon */
 }
 
-.sidebar .Navbar li a p {
-  font-size: 14px; /* Ajustar el tamaño de la fuente */
+.sidebar .Navbar li a:hover i {
+  color: #00ff88; /* Cambia el color al pasar el cursor (neon verde) */
+  text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88; /* Efecto neon al pasar el cursor */
 }
 
 /* Estilos para el contenido principal */
