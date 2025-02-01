@@ -117,8 +117,7 @@ tr:hover {
 
 /* Detalles del Usuario, Cliente y Medidor */
 .user-details-container,
-.client-details-container,
-.meter-details-container {
+.client-details-container {
   display: flex;
   justify-content: center;
   align-items: center;

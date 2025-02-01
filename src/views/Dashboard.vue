@@ -49,14 +49,13 @@
     </div>
 
     <h3>Ubicación del Medidor</h3>
-    <<<<<<< HEAD
+
     <input type="number" id="medidorId" placeholder="ID del medidor" />
     <button id="buscarMedidor">Buscar Medidor</button>
     <div id="map" class="map"></div>
     <!-- Mapa interactivo -->
-    =======
+
     <div id="map" class="map"></div>
-    >>>>>>> 58b8d6eec796c4e652b235dd51c6f3856c38523e
   </div>
 </template>
 
