@@ -60,8 +60,14 @@
             <td>{{ gateway.status }}</td>
             <td class="actions">
               <i class="fas fa-eye" @click="viewDetails(gateway.idGateway)"></i>
-              <i class="fas fa-edit" @click="editGateway(gateway.idGateway)"></i>
-              <i class="fas fa-trash-alt" @click="confirmDelete(gateway.idGateway)"></i>
+              <i
+                class="fas fa-edit"
+                @click="editGateway(gateway.idGateway)"
+              ></i>
+              <i
+                class="fas fa-trash-alt"
+                @click="confirmDelete(gateway.idGateway)"
+              ></i>
             </td>
           </tr>
         </tbody>
@@ -108,10 +114,26 @@
         </div>
         <div class="form-group">
           <label for="status">Estado</label>
-          <select id="status" v-model="currentGateway.status" class="form-control">
+          <select
+            id="status"
+            v-model="currentGateway.status"
+            class="form-control"
+          >
             <option value="activo">Activo</option>
             <option value="inactivo">Inactivo</option>
           </select>
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-primary">
+            {{ editing ? "Guardar" : "Agregar" }}
+          </button>
+          <button
+            type="button"
+            @click="closeFormModal"
+            class="btn btn-secondary"
+          >
+            Cancelar
+          </button>
         </div>
       </form>
     </Modal>
@@ -120,11 +142,16 @@
     <div v-if="selectedGateway" class="gateway-details-container">
       <div class="gateway-details">
         <h2>Detalle del Gateway</h2>
-        <p><strong>Fecha de Instalación:</strong> {{ selectedGateway.installDate }}</p>
+        <p>
+          <strong>Fecha de Instalación:</strong>
+          {{ selectedGateway.installDate }}
+        </p>
         <p><strong>Nombre:</strong> {{ selectedGateway.name }}</p>
         <p><strong>Ubicación:</strong> {{ selectedGateway.location }}</p>
         <p><strong>Estado:</strong> {{ selectedGateway.status }}</p>
-        <button @click="selectedGateway = null" class="back-button">Cerrar</button>
+        <button @click="selectedGateway = null" class="back-button">
+          Cerrar
+        </button>
       </div>
     </div>
   </div>
@@ -187,12 +214,16 @@ export default {
     },
     editGateway(id) {
       this.editing = true;
-      this.currentGateway = { ...this.gateways.find(gateway => gateway.idGateway === id) };
+      this.currentGateway = {
+        ...this.gateways.find((gateway) => gateway.idGateway === id),
+      };
       this.showFormModal = true;
     },
     submitForm() {
       if (this.editing) {
-        const index = this.gateways.findIndex(gateway => gateway.idGateway === this.currentGateway.idGateway);
+        const index = this.gateways.findIndex(
+          (gateway) => gateway.idGateway === this.currentGateway.idGateway
+        );
         if (index !== -1) this.gateways[index] = { ...this.currentGateway };
       } else {
         this.currentGateway.idGateway = (this.gateways.length + 1).toString();
@@ -217,10 +248,14 @@ export default {
       this.editing = false;
     },
     viewDetails(id) {
-      this.selectedGateway = this.gateways.find(gateway => gateway.idGateway === id);
+      this.selectedGateway = this.gateways.find(
+        (gateway) => gateway.idGateway === id
+      );
     },
     confirmDelete(id) {
-      this.gateways = this.gateways.filter(gateway => gateway.idGateway !== id);
+      this.gateways = this.gateways.filter(
+        (gateway) => gateway.idGateway !== id
+      );
     },
   },
 };

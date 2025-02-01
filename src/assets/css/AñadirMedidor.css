@@ -154,7 +154,7 @@ tr:hover {
 }
 
 .meter-details {
-  width: 920px;
+  width: 99%;
   height: 90%;
   max-height: 400px;
   z-index: 100;

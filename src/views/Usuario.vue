@@ -10,7 +10,7 @@
         <button @click="showAddForm" class="add-button">Añadir Usuario</button>
       </div>
     </div>
-    
+
     <!-- Formulario de agregar/editar usuario -->
     <div class="form-container" v-if="showForm">
       <h2 class="title2">{{ editing ? "Editar " : "Agregar " }} Usuario</h2>
@@ -18,7 +18,12 @@
         <div class="inf">
           <div class="form-group">
             <label for="idUser" class="title">ID del Usuario</label>
-            <input type="text" id="idUser" v-model="currentUser.idUser" required />
+            <input
+              type="text"
+              id="idUser"
+              v-model="currentUser.idUser"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="name" class="title">Nombre del Usuario</label>
@@ -26,7 +31,12 @@
           </div>
           <div class="form-group">
             <label for="email" class="title">Email</label>
-            <input type="email" id="email" v-model="currentUser.email" required />
+            <input
+              type="email"
+              id="email"
+              v-model="currentUser.email"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="role" class="title">Rol</label>
@@ -65,7 +75,10 @@
             <td class="actions">
               <i class="fas fa-eye" @click="viewDetails(user.idUser)"></i>
               <i class="fas fa-edit" @click="editUser(user.idUser)"></i>
-              <i class="fas fa-trash-alt" @click="confirmDelete(user.idUser)"></i>
+              <i
+                class="fas fa-trash-alt"
+                @click="confirmDelete(user.idUser)"
+              ></i>
             </td>
           </tr>
         </tbody>
@@ -110,6 +123,18 @@
             class="form-control"
             required
           />
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-primary">
+            {{ editing ? "Guardar" : "Agregar" }}
+          </button>
+          <button
+            type="button"
+            @click="closeFormModal"
+            class="btn btn-secondary"
+          >
+            Cancelar
+          </button>
         </div>
       </form>
     </Modal>
@@ -192,13 +217,15 @@ export default {
     // Configurar el formulario para editar un usuario
     editUser(id) {
       this.editing = true;
-      this.currentUser = { ...this.users.find(user => user.idUser === id) };
+      this.currentUser = { ...this.users.find((user) => user.idUser === id) };
       this.showFormModal = true;
     },
     // Enviar el formulario (agregar o editar)
     submitForm() {
       if (this.editing) {
-        const index = this.users.findIndex(user => user.idUser === this.currentUser.idUser);
+        const index = this.users.findIndex(
+          (user) => user.idUser === this.currentUser.idUser
+        );
         if (index !== -1) this.users[index] = { ...this.currentUser };
       } else {
         this.currentUser.idUser = (this.users.length + 1).toString();
@@ -223,7 +250,7 @@ export default {
     },
     // Mostrar detalles de un usuario
     viewDetails(id) {
-      this.selectedUser = this.users.find(user => user.idUser === id);
+      this.selectedUser = this.users.find((user) => user.idUser === id);
     },
     // Confirmar eliminación de un usuario
     confirmDelete(id) {
@@ -232,7 +259,9 @@ export default {
     },
     // Eliminar un usuario
     deleteUser() {
-      this.users = this.users.filter(user => user.idUser !== this.userToDelete);
+      this.users = this.users.filter(
+        (user) => user.idUser !== this.userToDelete
+      );
       this.closeDeleteModal();
     },
     // Cerrar el modal de confirmación de eliminación

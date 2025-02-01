@@ -12,7 +12,7 @@
         title="Medidores Activos"
         :value="totalMedidores"
         icon="fas fa-tachometer-alt"
-        bgColorClass="bg-light"
+        bgColorClass="bg-white"
         enlace="dashboard/medidor"
       />
       <Card
@@ -48,14 +48,15 @@
       </div>
     </div>
 
-    <h3>Ubicación del Medidor</h3>
+    <h3 class="h3">Ubicación del Medidor</h3>
 
-    <input type="number" id="medidorId" placeholder="ID del medidor" />
-    <button id="buscarMedidor">Buscar Medidor</button>
-    <div id="map" class="map"></div>
+    <div class="search-container">
+      <input type="number" id="medidorId" placeholder="ID del medidor" />
+      <button id="buscarMedidor">Buscar Medidor</button>
+    </div>
+
+    <div id="map"></div>
     <!-- Mapa interactivo -->
-
-    <div id="map" class="map"></div>
   </div>
 </template>
 
@@ -175,51 +176,23 @@ export default {
       });
     },
     initMap() {
-      // Crear el mapa centrado en Ecuador
       this.map = L.map("map").setView([-1.8312, -78.1834], 6);
 
-      // Añadir la capa de OpenStreetMap
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: "© OpenStreetMap",
       }).addTo(this.map);
 
-      // Datos de ejemplo: lista de medidores con coordenadas
-      this.medidores = [
-        { id: 1, lat: -1.8312, lng: -78.1834, info: "Medidor 1 - Quito" },
-        { id: 2, lat: -2.2, lng: -79.88, info: "Medidor 2 - Guayaquil" },
-        { id: 3, lat: -3.99, lng: -79.2, info: "Medidor 3 - Loja" },
-      ];
+      this.markersLayer = L.markerClusterGroup();
+      this.addMarkers();
 
-      // Crear marcadores y agruparlos
-      this.markers = L.markerClusterGroup();
-      this.medidores.forEach((medidor) => {
-        let marker = L.marker([medidor.lat, medidor.lng])
-          .bindPopup(medidor.info)
-          .addTo(this.markers);
-      });
-      this.map.addLayer(this.markers);
+      this.map.addLayer(this.markersLayer);
 
-      // Evento para buscar el medidor
       document.getElementById("buscarMedidor").addEventListener("click", () => {
         this.buscarMedidor();
       });
     },
 
-    buscarMedidor() {
-      const medidorId = parseInt(document.getElementById("medidorId").value);
-
-      const medidor = this.medidores.find((m) => m.id === medidorId);
-      if (medidor) {
-        this.map.setView([medidor.lat, medidor.lng], 14); // Zoom al marcador encontrado
-        L.popup()
-          .setLatLng([medidor.lat, medidor.lng])
-          .setContent(`Medidor encontrado: ${medidor.info}`)
-          .openOn(this.map);
-      } else {
-        alert("Medidor no encontrado");
-      }
-    },
     addMarkers() {
       const iconActivo = L.icon({
         iconUrl: "activo-icon.png",
@@ -236,14 +209,52 @@ export default {
           icon: medidor.estado === "activo" ? iconActivo : iconInactivo,
         });
 
-        marker.bindPopup(`
-          <b>${medidor.name}</b><br>
-          Estado: ${medidor.estado}<br>
-          <button onclick="alert('Ver detalle de ${medidor.name}')">Ver Detalle</button>
-        `);
+        const popupContent = `
+        <b>${medidor.name}</b><br>
+        Estado: ${medidor.estado}<br>
+        <a href="/dashboard/medidor" class="ver-detalle" data-id="${medidor.id}">Ver Detalle</a>
+      `;
 
+        marker.bindPopup(popupContent);
         this.markersLayer.addLayer(marker);
       });
+
+      // Manejar clics en enlaces dentro de los popups
+      this.map.on("popupopen", (e) => {
+        const link = e.popup._contentNode.querySelector(".ver-detalle");
+        if (link) {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const medidorId = link.getAttribute("data-id");
+            this.verDetalleMedidor(medidorId);
+          });
+        }
+      });
+    },
+
+    buscarMedidor() {
+      const medidorId = parseInt(document.getElementById("medidorId").value);
+      const medidor = this.medidores.find((m) => m.id === medidorId);
+
+      if (medidor) {
+        this.map.setView([medidor.lat, medidor.lng], 14);
+        L.popup()
+          .setLatLng([medidor.lat, medidor.lng])
+          .setContent(
+            `
+          <b>${medidor.name}</b><br>
+          Estado: ${medidor.estado}<br>
+          <a href="/dashboard/medidor" class="ver-detalle" data-id="${medidor.id}">Ver Detalle</a>
+        `
+          )
+          .openOn(this.map);
+      } else {
+        alert("Medidor no encontrado");
+      }
+    },
+
+    verDetalleMedidor(medidorId) {
+      this.$router.push({ path: `dashboard/medidor` });
     },
   },
   mounted() {
@@ -321,6 +332,9 @@ export default {
   background-color: skyblue; /* Color de fondo al pasar el cursor */
   color: white; /* Color del texto al pasar el cursor */
 }
+.statistics-title {
+  color: white;
+}
 
 /* Media Queries para pantallas más pequeñas */
 @media (max-width: 1400px) {
@@ -368,15 +382,59 @@ export default {
 }
 
 /* Mapa */
-.map {
-  height: 400px;
+#map {
   width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  height: 500px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
 }
 
-h3 {
+/* Estilos para la cabecera */
+
+/* Contenedor del buscador */
+.search-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+/* Campo de entrada */
+#medidorId {
+  padding: 10px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 200px;
+  outline: none;
+}
+
+/* Efecto de enfoque */
+#medidorId:focus {
+  border-color: #0056b3;
+}
+
+/* Botón de búsqueda */
+#buscarMedidor {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Efecto hover */
+#buscarMedidor:hover {
+  background-color: #0056b3;
+}
+
+.h3 {
   color: white;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   font-size: 1.8rem;
