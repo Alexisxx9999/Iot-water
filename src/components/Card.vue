@@ -27,7 +27,6 @@ export default {
       type: String,
       required: true,
     },
-
     value: {
       type: Number,
       required: true,
@@ -55,6 +54,12 @@ export default {
   border-radius: 8px;
   box-shadow: 5px 8px 8px rgba(0, 0, 0, 0.1);
   color: black;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Efecto de levantar la tarjeta */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
 }
 
 .card-content {
@@ -66,12 +71,14 @@ export default {
   font-size: 20px;
   font-weight: bold;
   padding: 5px;
+  transition: color 0.3s ease; /* Transición suave para el título */
 }
 
 .card-value {
   font-size: 20px;
   margin: 8px 0;
   float: left;
+  transition: color 0.3s ease; /* Transición suave para el valor */
 }
 
 .card-footer {
@@ -82,34 +89,42 @@ export default {
   height: 40px;
   text-decoration: none;
 }
+
 .card-footer a {
   text-decoration: none;
+  color: inherit; /* Hereda el color del texto */
 }
 
 .card-icon {
   font-size: 45px;
-}
-.card-button {
-  background: transparent;
-  border: none;
-  color: white;
-  text-decoration: underline;
-  cursor: pointer;
+  transition: color 0.3s ease; /* Transición suave para el ícono */
 }
 
-.bg-orange {
-  background-color: #f39c12;
+/* Colores de fondo al pasar el cursor */
+.card.bg-orange:hover {
+  background-color: #e67e22; /* Naranja más oscuro */
+  color: white; /* Texto blanco */
 }
 
-.bg-light-orange {
-  background-color: #f39c80;
+.card.bg-light-orange:hover {
+  background-color: #e67e50; /* Naranja claro más oscuro */
+  color: white; /* Texto blanco */
 }
 
-.bg-brown {
-  background-color: #8e7759;
+.card.bg-brown:hover {
+  background-color: #6e5b4b; /* Marrón más oscuro */
+  color: white; /* Texto blanco */
 }
 
-.bg-yellow {
-  background-color: #f3c412;
+.card.bg-yellow:hover {
+  background-color: #f1c40f; /* Amarillo más oscuro */
+  color: black; /* Texto negro */
+}
+
+/* Cambiar el color del ícono y el texto al pasar el cursor */
+.card:hover .card-icon,
+.card:hover .card-title,
+.card:hover .card-value {
+  color: inherit; /* Hereda el color definido en el hover */
 }
 </style>

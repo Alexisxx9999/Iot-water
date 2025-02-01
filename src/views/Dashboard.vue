@@ -47,15 +47,15 @@
     </div>
 
     <h3>Ubicación del Medidor</h3>
-    <div id="map" class="map"></div> <!-- Mapa interactivo -->
+    <div id="map" class="map"></div>
   </div>
 </template>
 
 <script>
 import Card from "../components/Card.vue";
 import { Chart, registerables } from "chart.js";
-import L from 'leaflet'; // Importar Leaflet
-import 'leaflet/dist/leaflet.css'; // Importar estilos de Leaflet
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 Chart.register(...registerables);
 
@@ -211,7 +211,7 @@ export default {
       return months.reverse();
     },
     initMap() {
-      const map = L.map('map').setView([-1.8312, -78.1834], 6); // Centrar en Ecuador
+      const map = L.map('map').setView([-1.8312, -78.1834], 6);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -229,7 +229,7 @@ export default {
   },
   mounted() {
     this.fetchData();
-    this.initMap(); // Inicializar el mapa al montar el componente
+    this.initMap();
   },
 };
 </script>
@@ -237,13 +237,13 @@ export default {
 <style scoped>
 /* Fondo animado con gradiente */
 .dashboard {
-  background: linear-gradient(135deg, #c4c4c4, #0281ff);
+  background: linear-gradient(135deg, rgb(189, 234, 255), rgb(111, 204, 240));
   background-size: 400% 400%;
   animation: gradientBG 10s ease infinite;
   padding: 2%;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  min-height: 100vh; /* Cubrir toda la pantalla */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -259,44 +259,18 @@ export default {
 /* Encabezado del Dashboard */
 .header {
   text-align: center;
-  margin-bottom: 5%; /* Ajuste en porcentaje para ser relativo al tamaño de la pantalla */
+  margin-bottom: 5%;
   color: white;
 }
 
 .header h1 {
-  font-size: 3rem; /* Tamaño base para pantallas grandes */
+  font-size: 3rem;
   font-weight: 700;
 }
 
 .header p {
-  font-size: 1.5rem; /* Tamaño base para pantallas grandes */
+  font-size: 1.5rem;
   font-weight: 400;
-}
-
-/* Media Queries para tamaños de pantallas más pequeñas */
-@media (max-width: 1400px) {
-  .header h1 { font-size: 2.8rem; }
-  .header p { font-size: 1.4rem; }
-}
-
-@media (max-width: 1200px) {
-  .header h1 { font-size: 2.5rem; }
-  .header p { font-size: 1.3rem; }
-}
-
-@media (max-width: 1024px) {
-  .header h1 { font-size: 2.2rem; }
-  .header p { font-size: 1.1rem; }
-}
-
-@media (max-width: 768px) {
-  .header h1 { font-size: 1.8rem; }
-  .header p { font-size: 1rem; }
-}
-
-@media (max-width: 480px) {
-  .header h1 { font-size: 1.6rem; }
-  .header p { font-size: 0.9rem; }
 }
 
 /* Contenedor de tarjetas */
@@ -309,16 +283,18 @@ export default {
 }
 
 .card-container > * {
-  flex: 1 1 calc(25% - 20px); /* Cuatro columnas en pantallas grandes */
+  flex: 1 1 calc(25% - 20px);
   max-width: 300px;
   min-width: 250px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
   border-radius: 12px;
 }
 
 .card-container > *:hover {
   transform: translateY(-10px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  background-color: skyblue; /* Color de fondo al pasar el cursor */
+  color: white; /* Color del texto al pasar el cursor */
 }
 
 /* Media Queries para pantallas más pequeñas */
@@ -337,38 +313,27 @@ export default {
 /* Gráficas */
 .charts {
   display: flex;
-  flex-wrap: nowrap; /* No permitir que se envuelvan */
-  justify-content: space-between; /* Espacio entre gráficas */
+  flex-wrap: nowrap;
+  justify-content: space-between;
   gap: 30px;
   margin: 30px 0;
 }
 
 .chart-container {
-  flex: 1; /* Permite que las gráficas ocupen el mismo espacio */
-  min-width: 300px; /* Ancho mínimo para evitar que se aplasten */
+  flex: 1;
+  min-width: 300px;
   padding: 10px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex; /* Asegúrate de que el contenedor sea flex */
-  align-items: center; /* Centra el contenido verticalmente */
-  justify-content: center; /* Centra el contenido horizontalmente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .estadistica {
-  height: 250px; /* Asegúrate de que los gráficos tengan suficiente altura */
-  width: 100%; /* Asegúrate de que los gráficos ocupen el ancho completo del contenedor */
-}
-
-@media (max-width: 768px) {
-  .charts {
-    flex-direction: column; /* Apilar gráficas en móviles */
-    align-items: center;
-  }
-
-  .chart-container {
-    flex: 1 1 100%; /* Una columna en móviles */
-  }
+  height: 250px;
+  width: 100%;
 }
 
 /* Mapa */
@@ -385,26 +350,5 @@ h3 {
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   font-size: 1.8rem;
   margin-bottom: 15px;
-}
-
-/* Media Queries para pantallas grandes */
-@media (max-width: 1400px) {
-  .map { height: 350px; }
-  h3 { font-size: 2rem; }
-}
-
-@media (max-width: 1024px) {
-  .map { height: 250px; }
-  h3 { font-size: 1.6rem; }
-}
-
-@media (max-width: 768px) {
-  .map { height: 200px; }
-  h3 { font-size: 1.4rem; }
-}
-
-@media (max-width: 480px) {
-  .map { height: 180px; }
-  h3 { font-size: 1.2rem; }
 }
 </style>
