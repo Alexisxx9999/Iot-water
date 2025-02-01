@@ -49,10 +49,14 @@
     </div>
 
     <h3>Ubicación del Medidor</h3>
+    <<<<<<< HEAD
     <input type="number" id="medidorId" placeholder="ID del medidor" />
     <button id="buscarMedidor">Buscar Medidor</button>
     <div id="map" class="map"></div>
     <!-- Mapa interactivo -->
+    =======
+    <div id="map" class="map"></div>
+    >>>>>>> 58b8d6eec796c4e652b235dd51c6f3856c38523e
   </div>
 </template>
 
@@ -250,4 +254,133 @@ export default {
 };
 </script>
 
-<style src="../assets/css/dashboard.css"></style>
+<style scoped>
+/* Fondo animado con gradiente */
+.dashboard {
+  background: linear-gradient(135deg, rgb(189, 234, 255), rgb(111, 204, 240));
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+  padding: 2%;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Encabezado del Dashboard */
+.header {
+  text-align: center;
+  margin-bottom: 5%;
+  color: white;
+}
+
+.header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.header p {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+/* Contenedor de tarjetas */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px 0;
+  gap: 20px;
+}
+
+.card-container > * {
+  flex: 1 1 calc(25% - 20px);
+  max-width: 300px;
+  min-width: 250px;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  border-radius: 12px;
+}
+
+.card-container > *:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  background-color: skyblue; /* Color de fondo al pasar el cursor */
+  color: white; /* Color del texto al pasar el cursor */
+}
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 1400px) {
+  .card-container > * {
+    flex: 1 1 calc(33.33% - 20px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .card-container > * {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container > * {
+    flex: 1 1 100%;
+  } /* Una columna en móviles */
+}
+
+/* Gráficas */
+.charts {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.chart-container {
+  flex: 1;
+  min-width: 300px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.estadistica {
+  height: 250px;
+  width: 100%;
+}
+
+/* Mapa */
+.map {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+h3 {
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+</style>

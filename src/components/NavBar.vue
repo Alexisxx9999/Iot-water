@@ -246,34 +246,29 @@ export default {
   width: 100%;
   display: flex;
   text-decoration: none;
-  color: #00d1ff; /* Color neon azul para el texto del menú lateral */
+  color: #93ebff; /* Color neon azul para el texto del menú lateral */
   padding: 10px 15px;
   border-radius: 10px;
   align-items: center;
-  transition: background 0.3s, color 0.3s, text-shadow 0.3s; /* Animación de fondo, color y brillo */
-  text-shadow: 0 0 5px #00d1ff, 0 0 10px #00d1ff; /* Efecto neon */
+  transition: background 0.3s, color 0.2s, text-shadow 0.2s; /* Animación de fondo, color y brillo */
+  text-shadow: 0 0 2px #00d1ff, 0 0 10px #a5eeff; /* Efecto neon */
 }
 
 .sidebar .Navbar li a:hover {
-  background: rgba(
-    0,
-    209,
-    255,
-    0.1
-  ); /* Fondo semi-transparente al pasar el cursor */
-  color: #00ff88; /* Cambia el color al pasar el cursor (neon verde) */
-  text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88; /* Efecto neon al pasar el cursor */
+  background: rgba(0, 209, 255, 0.1); /* Fondo semi-transparente al pasar el cursor */
+  color: #7dfbc0; /* Cambia el color al pasar el cursor (neon verde) */
+  text-shadow: 0 0 2px #00ff88, 0 0 10px #00ff88; /* Efecto neon al pasar el cursor */
 }
 
 .sidebar .Navbar li a i {
   margin-right: 5px; /* Espacio entre el icono y el texto */
   color: #00d1ff; /* Color neon azul para los iconos */
-  text-shadow: 0 0 5px #00d1ff, 0 0 10px #00d1ff; /* Efecto neon */
+  text-shadow: 0 0 5px #a3eeff, 0 0 10px #00d1ff; /* Efecto neon */
 }
 
 .sidebar .Navbar li a:hover i {
-  color: #00ff88; /* Cambia el color al pasar el cursor (neon verde) */
-  text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88; /* Efecto neon al pasar el cursor */
+  color: #99f9cc; /* Cambia el color al pasar el cursor (neon verde) */
+  text-shadow: 0 0 5px #61ffb5, 0 0 10px #a6ffd5; /* Efecto neon al pasar el cursor */
 }
 
 /* Estilos para el contenido principal */
