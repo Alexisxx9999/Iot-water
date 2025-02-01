@@ -1,16 +1,15 @@
 <template>
   <transition name="fade">
     <div v-if="show" class="modal-overlay" @click.self="cancel">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
         <h3 id="modal-title">{{ title }}</h3>
-        <slot></slot> <!-- Contenido dinámico -->
-
-        <div class="modal-buttons">
-          <slot name="buttons">
-            <button @click="confirm" class="btn btn-confirm">Confirmar</button>
-            <button @click="cancel" class="btn btn-cancel">Cancelar</button>
-          </slot>
-        </div>
+        <slot></slot>
+        <!-- Contenido dinámico -->
       </div>
     </div>
   </transition>
@@ -52,6 +51,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  max-height: 100vh;
   background: rgba(0, 0, 0, 0.6); /* Color más oscuro para el fondo */
   display: flex;
   justify-content: center;
@@ -97,7 +97,7 @@ export default {
 }
 
 .btn-confirm {
-  background-color: #00468C; /* Azul marino */
+  background-color: #00468c; /* Azul marino */
   color: white;
 }
 
@@ -122,7 +122,8 @@ export default {
   transition: opacity 0.3s ease;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 

@@ -1,0 +1,220 @@
+/* Fondo animado con gradiente */
+.dashboard {
+  background: linear-gradient(135deg, #c4c4c4, #0281ff);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+  padding: 2%;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  min-height: 100vh; /* Cubrir toda la pantalla */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Encabezado del Dashboard */
+.header {
+  text-align: center;
+  margin-bottom: 5%; /* Ajuste en porcentaje para ser relativo al tamaño de la pantalla */
+  color: white;
+}
+
+.header h1 {
+  font-size: 3rem; /* Tamaño base para pantallas grandes */
+  font-weight: 700;
+}
+
+.header p {
+  font-size: 1.5rem; /* Tamaño base para pantallas grandes */
+  font-weight: 400;
+}
+
+/* Media Queries para tamaños de pantallas más pequeñas */
+@media (max-width: 1400px) {
+  .header h1 {
+    font-size: 2.8rem;
+  }
+  .header p {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header h1 {
+    font-size: 2.5rem;
+  }
+  .header p {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header h1 {
+    font-size: 2.2rem;
+  }
+  .header p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+  .header p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.6rem;
+  }
+  .header p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Contenedor de tarjetas */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px 0;
+  gap: 20px;
+}
+
+.card-container > * {
+  flex: 1 1 calc(25% - 20px); /* Cuatro columnas en pantallas grandes */
+  max-width: 300px;
+  min-width: 250px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 12px;
+}
+
+.card-container > *:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 1400px) {
+  .card-container > * {
+    flex: 1 1 calc(33.33% - 20px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .card-container > * {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container > * {
+    flex: 1 1 100%;
+  } /* Una columna en móviles */
+}
+
+/* Gráficas */
+.charts {
+  display: flex;
+  flex-wrap: nowrap; /* No permitir que se envuelvan */
+  justify-content: space-between; /* Espacio entre gráficas */
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.chart-container {
+  flex: 1; /* Permite que las gráficas ocupen el mismo espacio */
+  min-width: 300px; /* Ancho mínimo para evitar que se aplasten */
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex; /* Asegúrate de que el contenedor sea flex */
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+}
+
+.estadistica {
+  height: 250px; /* Asegúrate de que los gráficos tengan suficiente altura */
+  width: 100%; /* Asegúrate de que los gráficos ocupen el ancho completo del contenedor */
+}
+
+@media (max-width: 768px) {
+  .charts {
+    flex-direction: column; /* Apilar gráficas en móviles */
+    align-items: center;
+  }
+
+  .chart-container {
+    flex: 1 1 100%; /* Una columna en móviles */
+  }
+}
+
+/* Mapa */
+.map {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+h3 {
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+/* Media Queries para pantallas grandes */
+@media (max-width: 1400px) {
+  .map {
+    height: 350px;
+  }
+  h3 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .map {
+    height: 250px;
+  }
+  h3 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .map {
+    height: 200px;
+  }
+  h3 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .map {
+    height: 180px;
+  }
+  h3 {
+    font-size: 1.2rem;
+  }
+}

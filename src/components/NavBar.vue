@@ -52,9 +52,21 @@ export default {
       menuItems: [
         { name: "Dashboard", path: "/dashboard", icon: "fas fa-tv" },
         { name: "Gateway", path: "/dashboard/gateway", icon: "fas fa-plug" },
-        { name: "Usuario", path: "/dashboard/usuario", icon: "fas fa-user-plus" },
-        { name: "Medidor", path: "/dashboard/medidor", icon: "fas fa-tachometer-alt" },
-        { name: "Cliente", path: "/dashboard/cliente", icon: "fas fa-user-plus" },
+        {
+          name: "Usuario",
+          path: "/dashboard/usuario",
+          icon: "fas fa-user-plus",
+        },
+        {
+          name: "Medidor",
+          path: "/dashboard/medidor",
+          icon: "fas fa-tachometer-alt",
+        },
+        {
+          name: "Cliente",
+          path: "/dashboard/cliente",
+          icon: "fas fa-user-plus",
+        },
       ],
       isSidebarVisible: true, // Controla la visibilidad de la barra lateral
     };
@@ -243,7 +255,12 @@ export default {
 }
 
 .sidebar .Navbar li a:hover {
-  background: rgba(0, 209, 255, 0.1); /* Fondo semi-transparente al pasar el cursor */
+  background: rgba(
+    0,
+    209,
+    255,
+    0.1
+  ); /* Fondo semi-transparente al pasar el cursor */
   color: #00ff88; /* Cambia el color al pasar el cursor (neon verde) */
   text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88; /* Efecto neon al pasar el cursor */
 }

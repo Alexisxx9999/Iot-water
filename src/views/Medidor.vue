@@ -206,18 +206,32 @@
     <!-- Detalle del Medidor -->
     <div v-if="selectedMeter" class="meter-details-container">
       <div class="meter-details">
-        <h2>Detalle del Medidor</h2>
-        <p><strong>ID del Medidor:</strong> {{ selectedMeter.idMeter }}</p>
-        <p><strong>Codigo</strong> {{ selectedMeter.name }}</p>
-        <p><strong>Ubicación:</strong> {{ selectedMeter.location }}</p>
-        <p><strong>Modelo:</strong> {{ selectedMeter.type }}</p>
-        <p><strong>id_gateway:</strong> {{ selectedMeter.id_gateway }}</p>
-        <p><strong>id_cliente:</strong> {{ selectedMeter.id_cliente }}</p>
-        <p><strong>Estado:</strong> {{ selectedMeter.estado }}</p>
-        <p>
-          <strong>Fecha de instalacion:</strong>
-          {{ selectedMeter.fecha_instalacion }}
-        </p>
+        <div class="detail-total">
+          <div class="meter-icon">
+            <img src="../assets/meter-icon.png" alt="Ícono de Medidor" />
+          </div>
+          <div class="inf">
+            <h2>Detalle del Medidor</h2>
+            <p><strong>ID del Medidor:</strong> {{ selectedMeter.idMeter }}</p>
+            <p><strong>Codigo</strong> {{ selectedMeter.name }}</p>
+            <p><strong>Ubicación:</strong> {{ selectedMeter.location }}</p>
+            <p><strong>Modelo:</strong> {{ selectedMeter.type }}</p>
+            <p><strong>id_gateway:</strong> {{ selectedMeter.id_gateway }}</p>
+            <p><strong>id_cliente:</strong> {{ selectedMeter.id_cliente }}</p>
+            <p><strong>Estado:</strong> {{ selectedMeter.estado }}</p>
+            <p>
+              <strong>Fecha de instalacion:</strong>
+              {{ selectedMeter.fecha_instalacion }}
+            </p>
+          </div>
+
+          <div class="meter-statistics">
+            <h3>Consumo de Agua</h3>
+            <p><strong>Total Consumido:</strong> {{ consumoTotal }} litros</p>
+            <canvas id="consumptionChart"></canvas>
+          </div>
+        </div>
+
         <button @click="selectedMeter = null" class="back-button">
           Cerrar
         </button>
@@ -225,9 +239,9 @@
     </div>
   </div>
 </template>
-
 <script>
 import Modal from "../components/Modal.vue";
+import Chart from "chart.js/auto";
 
 export default {
   name: "Meter",
@@ -250,6 +264,9 @@ export default {
       editing: false,
       showFormModal: false, // Controla si el modal del formulario está visible
       selectedMeter: null, // Controla si hay un medidor seleccionado para mostrar detalles
+      consumoMensual: [], // Datos de consumo mensual del medidor seleccionado
+      consumoTotal: 0, // Consumo total del medidor seleccionado
+      consumptionChart: null, // Referencia al gráfico
     };
   },
   created() {
@@ -267,7 +284,7 @@ export default {
           estado: "activo",
           id_gateway: "23",
           id_cliente: "21312",
-          fecha_instalacion: "2024-08-9",
+          fecha_instalacion: "2024-08-09",
         },
         {
           idMeter: "2",
@@ -277,7 +294,7 @@ export default {
           estado: "inactivo",
           id_gateway: "1000",
           id_cliente: "1000",
-          fecha_instalacion: "2024-08-9",
+          fecha_instalacion: "2024-08-09",
         },
       ];
     },
@@ -322,13 +339,90 @@ export default {
       };
       this.editing = false;
     },
-    // Mostrar detalles de un Medidor
+    // Mostrar detalles de un Medidor y cargar consumo de agua
     viewDetails(id) {
       this.selectedMeter = this.meters.find((meter) => meter.idMeter === id);
+
+      if (this.selectedMeter) {
+        // Simulación de consumo mensual para cada medidor
+        this.consumoMensual = Array.from({ length: 12 }, () =>
+          Math.floor(Math.random() * 100 + 50)
+        );
+
+        this.calcularConsumoTotal();
+
+        // Esperar a que Vue actualice el DOM antes de intentar dibujar el gráfico
+        this.$nextTick(() => {
+          this.renderChart();
+        });
+      }
     },
     // Confirmar eliminación de un Medidor
     confirmDelete(id) {
       this.meters = this.meters.filter((meter) => meter.idMeter !== id);
+    },
+    // Calcular el consumo total
+    calcularConsumoTotal() {
+      this.consumoTotal = this.consumoMensual.reduce(
+        (acc, val) => acc + val,
+        0
+      );
+    },
+    // Renderizar gráfico de consumo
+
+    renderChart() {
+      this.$nextTick(() => {
+        const canvas = document.getElementById("consumptionChart");
+
+        if (!canvas) {
+          console.error("El canvas no se encontró en el DOM.");
+          return;
+        }
+
+        const ctx = canvas.getContext("2d");
+
+        if (this.consumptionChart) {
+          this.consumptionChart.destroy(); // Eliminar gráfico anterior si existe
+        }
+
+        this.consumptionChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [
+              "Enero",
+              "Febrero",
+              "Marzo",
+              "Abril",
+              "Mayo",
+              "Junio",
+              "Julio",
+              "Agosto",
+              "Septiembre",
+              "Octubre",
+              "Noviembre",
+              "Diciembre",
+            ],
+            datasets: [
+              {
+                label: "Consumo de Agua (L)",
+                data: this.consumoMensual,
+                borderColor: "blue",
+                backgroundColor: "rgba(0, 123, 255, 0.2)",
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      });
     },
   },
 };

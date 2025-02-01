@@ -131,8 +131,7 @@ tr:hover {
 }
 
 .user-details,
-.client-details,
-.meter-details {
+.client-details {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -159,9 +158,6 @@ tr:hover {
 }
 
 /* Modal de Confirmación */
-.modal-container {
-  /* Agregar estilos específicos para los modales si es necesario */
-}
 
 /* Responsividad */
 @media (max-width: 600px) {
@@ -181,7 +177,8 @@ tr:hover {
     font-size: 12px;
   }
 
-  .add-button, .back-button {
+  .add-button,
+  .back-button {
     width: 100%;
     margin-top: 10px;
   }

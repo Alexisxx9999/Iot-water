@@ -148,38 +148,106 @@ tr:hover {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  max-width: 500px;
   margin: auto;
+  z-index: 10000;
 }
 
-.meter-details h2 {
+.meter-details {
+  width: 850px;
+  height: 90%;
+  max-height: 400px;
+}
+.detail-total {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap; /* Para adaptarse en pantallas pequeñas */
+}
+
+/* Ícono del medidor */
+.meter-icon img {
+  width: 130px;
+  height: auto;
+  display: block;
+}
+
+/* Información del medidor */
+.inf {
+  flex: 1;
+  min-width: 250px;
+  box-shadow: 5px, 5px, 5px #92b9e0;
+}
+
+.inf h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.inf p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+/* Sección de estadísticas */
+.meter-statistics {
+  flex: 1;
+  min-width: 250px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.meter-statistics h3 {
+  font-size: 20px;
+  color: #333;
   margin-bottom: 15px;
 }
 
-.meter-icon img {
-  width: 100px;
-  height: auto;
-  display: block;
-  margin: 10px auto;
+.meter-statistics p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 15px;
 }
 
-.meter-statistics {
-  margin-top: 20px;
-}
-
-canvas {
+/* Contenedor del gráfico */
+.chart-container {
+  position: relative;
   width: 100%;
+  max-width: 350px;
   height: 250px;
+  margin: auto;
 }
 
+/* Ajuste del canvas */
+#consumptionChart {
+  width: 95% !important;
+  height: 200px !important;
+  display: block;
+}
+
+/* Botón de cierre */
 .back-button {
   display: block;
-  margin: 20px auto;
-  padding: 10px 15px;
-  background: red;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #dc3545;
   color: white;
+  text-align: center;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
+  position: relative;
+}
+
+.back-button:hover {
+  background-color: #c82333;
 }
 
 /* Estilos responsivos */
