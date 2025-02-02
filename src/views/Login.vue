@@ -121,7 +121,6 @@ export default {
 }
 
 .login-form {
-  flex: 1;
   background-color: rgba(35, 58, 99, 0.9);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
