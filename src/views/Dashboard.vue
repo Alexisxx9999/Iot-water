@@ -297,6 +297,7 @@ export default {
   text-align: center;
   margin-bottom: 5%;
   color: white;
+  animation: fadeInDown 1s ease-out;
 }
 
 .header h1 {
@@ -332,8 +333,10 @@ export default {
   background-color: skyblue; /* Color de fondo al pasar el cursor */
   color: white; /* Color del texto al pasar el cursor */
 }
+
 .statistics-title {
   color: white;
+  animation: fadeInUp 1s ease-out;
 }
 
 /* Media Queries para pantallas más pequeñas */
@@ -358,7 +361,7 @@ export default {
 /* Gráficas */
 .charts {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 30px;
   margin: 30px 0;
@@ -374,6 +377,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: fadeInUp 1s ease-out;
 }
 
 .estadistica {
@@ -389,9 +393,8 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
+  animation: fadeInUp 1s ease-out;
 }
-
-/* Estilos para la cabecera */
 
 /* Contenedor del buscador */
 .search-container {
@@ -400,6 +403,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin-bottom: 15px;
+  animation: fadeInUp 1s ease-out;
 }
 
 /* Campo de entrada */
@@ -439,5 +443,29 @@ export default {
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   font-size: 1.8rem;
   margin-bottom: 15px;
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Animaciones */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
