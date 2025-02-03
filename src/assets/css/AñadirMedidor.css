@@ -4,22 +4,40 @@
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Encabezado */
 .header-container {
   display: flex;
-  flex-direction: column; /* Cambiado a columna para móviles */
-  align-items: center; /* Centrar elementos en dispositivos pequeños */
+  flex-direction: column;
+  align-items: center;
   background-color: #e1e8ed;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideInDown 0.5s ease-in-out;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header-container h1 {
   margin: 0;
-  font-size: 24px; /* Tamaño de fuente más pequeño para móviles */
+  font-size: 24px;
 }
 
 .add-button {
@@ -29,11 +47,14 @@
   border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
-  margin-top: 10px; /* Espacio en dispositivos pequeños */
+  margin-top: 10px;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .add-button:hover {
   background-color: #218838;
+  transform: translateY(-2px);
 }
 
 .title2 {
@@ -46,12 +67,15 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
 }
 
 .form-principal {
   max-width: 850px;
   margin: 0 auto;
-  padding: 10 px;
+  padding: 10px;
   background-color: #f7f7f7;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -74,7 +98,7 @@
 }
 
 .form-control {
-  width: 90%;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -99,20 +123,23 @@
 /* Tabla */
 .table-container {
   margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff; /* Fondo blanco para la tabla */
+  background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 th {
-  background-color: #001f3f; /* Azul marino para el encabezado */
-  color: white; /* Texto blanco para contraste */
+  background-color: #001f3f;
+  color: white;
   padding: 12px;
   text-align: left;
 }
@@ -123,50 +150,48 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #e7f3ff; /* Azul claro para filas pares */
+  background-color: #e7f3ff;
 }
 
 tr:hover {
-  background-color: #cce5ff; /* Color al pasar el ratón por encima de las filas */
+  background-color: #cce5ff;
 }
 
 /* Acciones */
 .actions i {
   margin-right: 10px;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .actions i:hover {
   color: #007bff;
 }
-.back-button:hover {
-  background-color: rgb(0, 1, 77);
-}
 
+/* Detalles del medidor */
 .meter-details-container {
   background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin: 50px auto;
-
-  z-index: 10000;
+  width: 100%;
+  max-width: 800px;
 }
 
 .meter-details {
-  width: 99%;
-  height: 90%;
+  width: 100%;
+  height: auto;
   max-height: 400px;
-  z-index: 100;
 }
+
 .detail-total {
   width: 100%;
   display: flex;
   align-items: center;
-
   justify-content: space-between;
   gap: 20px;
-  flex-wrap: wrap; /* Para adaptarse en pantallas pequeñas */
+  flex-wrap: wrap;
 }
 
 /* Ícono del medidor */
@@ -180,7 +205,7 @@ tr:hover {
 .inf {
   flex: 1;
   min-width: 250px;
-  box-shadow: 5px, 5px, 5px #92b9e0;
+  box-shadow: 5px 5px 5px #92b9e0;
 }
 
 .inf h2 {
@@ -245,7 +270,7 @@ tr:hover {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  position: relative;
+  transition: background-color 0.3s ease;
 }
 
 .back-button:hover {
@@ -255,58 +280,82 @@ tr:hover {
 /* Estilos responsivos */
 @media (max-width: 600px) {
   .header-container {
-    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
-    align-items: center;
+    padding: 15px;
   }
 
   .header-container h1 {
-    font-size: 20px; /* Ajustar tamaño de fuente */
+    font-size: 20px;
   }
 
   .form-principal {
-    padding: 10px; /* Reduce padding en móviles */
+    padding: 10px;
   }
 
   .form-control {
-    font-size: 12px; /* Ajustar tamaño de fuente en móviles */
+    font-size: 12px;
   }
 
   .add-button,
   .back-button {
-    width: 100%; /* Botones ocupan el ancho completo */
-    margin-top: 10px; /* Espacio entre botones */
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .detail-total {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .meter-icon img {
+    width: 100px;
+  }
+
+  .inf h2 {
+    font-size: 18px;
+  }
+
+  .inf p {
+    font-size: 14px;
+  }
+
+  .meter-statistics h3 {
+    font-size: 18px;
+  }
+
+  .meter-statistics p {
+    font-size: 14px;
   }
 }
 
 @media (min-width: 601px) and (max-width: 1200px) {
   .header-container h1 {
-    font-size: 24px; /* Tamaño de fuente mediano */
+    font-size: 24px;
   }
 
   .form-principal {
-    padding: 15px; /* Padding mediano */
+    padding: 15px;
   }
 
   .form-control {
-    font-size: 14px; /* Tamaño de fuente estándar */
+    font-size: 14px;
   }
 
   .add-button,
   .back-button {
-    width: auto; /* Botones ocupan solo el espacio necesario */
+    width: auto;
   }
 }
 
 @media (min-width: 1201px) {
   .header-container h1 {
-    font-size: 28px; /* Tamaño de fuente grande para pantallas grandes */
+    font-size: 28px;
   }
 
   .form-principal {
-    padding: 20px; /* Padding estándar */
+    padding: 20px;
   }
 
   .form-control {
-    font-size: 16px; /* Tamaño de fuente grande para pantallas grandes */
+    font-size: 16px;
   }
 }

@@ -10,8 +10,10 @@
         <button @click="showAddForm" class="add-button">Añadir Gateway</button>
       </div>
     </div>
+
+    <!-- Formulario de agregar/editar -->
     <div class="form-container" v-if="showForm">
-      <h2 class="title2">{{ editing ? "Editar " : "Agregar " }} adopcion 😸</h2>
+      <h2 class="title2">{{ editing ? "Editar " : "Agregar " }} Gateway</h2>
       <form @submit.prevent="submitForm" class="form-principal">
         <div class="inf">
           <div class="form-group">
@@ -41,6 +43,8 @@
         </div>
       </form>
     </div>
+
+    <!-- Tabla de gateways -->
     <div class="table-container">
       <table>
         <thead>
@@ -74,7 +78,7 @@
       </table>
     </div>
 
-    <!-- Modal para el formulario de agregar/editar (del primer código) -->
+    <!-- Modal para el formulario de agregar/editar -->
     <Modal
       v-if="showFormModal"
       :show="showFormModal"
@@ -260,5 +264,3 @@ export default {
   },
 };
 </script>
-
-<style src="../assets/css/AñadirGateway.css"></style>

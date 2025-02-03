@@ -4,22 +4,53 @@
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 10px;
+  animation: fadeIn 0.5s ease-in-out;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Encabezado */
 .header-container {
   display: flex;
-  flex-direction: column; /* Cambiado a columna para móviles */
-  align-items: center; /* Centrar elementos en dispositivos pequeños */
+  flex-direction: column;
+  align-items: center;
   background-color: #e1e8ed;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideInDown 0.5s ease-in-out;
+  max-width: 800px; /* Ancho máximo del contenedor */
+  width: 100%; /* Ocupa el 100% del ancho disponible */
+  margin: 0 auto; /* Centra horizontalmente */
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header-container h1 {
   margin: 0;
-  font-size: 24px; /* Tamaño de fuente más pequeño para móviles */
+  font-size: 24px;
 }
 
 .add-button {
@@ -29,16 +60,14 @@
   border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
-  margin-top: 10px; /* Espacio en dispositivos pequeños */
-  width: 100%; /* Botón ocupa el ancho completo en móviles */
+  margin-top: 10px;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .add-button:hover {
   background-color: #218838;
-}
-
-.title2 {
-  text-align: center;
+  transform: translateY(-2px);
 }
 
 /* Formulario */
@@ -48,6 +77,18 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin-top: 20px;
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .form-principal {
@@ -83,6 +124,7 @@
   box-sizing: border-box;
   font-size: 14px;
   color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-control:focus {
@@ -100,20 +142,21 @@
 /* Tabla */
 .table-container {
   margin-top: 20px;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff; /* Fondo blanco para la tabla */
+  background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 th {
-  background-color: #001f3f; /* Azul marino para el encabezado */
-  color: white; /* Texto blanco para contraste */
+  background-color: #001f3f;
+  color: white;
   padding: 12px;
   text-align: left;
 }
@@ -124,21 +167,55 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #e7f3ff; /* Azul claro para filas pares */
+  background-color: #e7f3ff;
 }
 
 tr:hover {
-  background-color: #cce5ff; /* Color al pasar el ratón por encima de las filas */
+  background-color: #cce5ff;
 }
 
 /* Acciones */
 .actions i {
   margin-right: 10px;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .actions i:hover {
   color: #007bff;
+}
+
+/* Detalle del Gateway */
+.gateway-details-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.gateway-details {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideInUp 0.3s ease-in-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .back-button {
@@ -148,8 +225,9 @@ tr:hover {
   border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
-  margin-top: 20px; /* Espacio en dispositivos pequeños */
-  width: 100%; /* Botón ocupa el ancho completo en móviles */
+  margin-top: 20px;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .back-button:hover {
@@ -159,55 +237,55 @@ tr:hover {
 /* Estilos responsivos */
 @media (max-width: 600px) {
   .header-container {
-    padding: 15px; /* Reduce padding en móviles */
+    padding: 155px;
   }
 
   .header-container h1 {
-    font-size: 20px; /* Ajustar tamaño de fuente */
+    font-size: 20px;
   }
 
   .form-principal {
-    padding: 10px; /* Reduce padding en móviles */
+    padding: 10px;
   }
 
   .form-control {
-    font-size: 12px; /* Ajustar tamaño de fuente en móviles */
+    font-size: 12px;
   }
 
   .add-button, .back-button {
-    width: 100%; /* Botones ocupan el ancho completo */
-    margin-top: 10px; /* Espacio entre botones */
+    width: 100%;
+    margin-top: 10px;
   }
 }
 
 @media (min-width: 601px) and (max-width: 1200px) {
   .header-container h1 {
-    font-size: 24px; /* Tamaño de fuente mediano */
+    font-size: 24px;
   }
 
   .form-principal {
-    padding: 15px; /* Padding mediano */
+    padding: 15px;
   }
 
   .form-control {
-    font-size: 14px; /* Tamaño de fuente estándar */
+    font-size: 14px;
   }
 
   .add-button, .back-button {
-    width: auto; /* Botones ocupan solo el espacio necesario */
+    width: auto;
   }
 }
 
 @media (min-width: 1201px) {
   .header-container h1 {
-    font-size: 28px; /* Tamaño de fuente grande para pantallas grandes */
+    font-size: 28px;
   }
 
   .form-principal {
-    padding: 20px; /* Padding estándar */
+    padding: 20px;
   }
 
   .form-control {
-    font-size: 16px; /* Tamaño de fuente grande para pantallas grandes */
+    font-size: 16px;
   }
 }
