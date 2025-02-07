@@ -1,9 +1,7 @@
 <template>
   <div class="dashboard">
     <header class="header">
-      <h1>
-        Bienvenido, <em>{{ username }}</em>
-      </h1>
+      <h1>Bienvenido</h1>
       <p>Accesos directos y estadísticas</p>
     </header>
 
@@ -38,25 +36,33 @@
       />
     </div>
 
-    <h3 class="statistics-title">Estadísticas de Consumo de Agua por mes</h3>
-    <div class="charts">
-      <div class="chart-container">
-        <canvas ref="lineChart" class="estadistica"></canvas>
+    <div class="statics-container">
+      <h3 class="statistics-title">Estadísticas de Consumo de Agua por mes</h3>
+      <div class="stats-panel">
+        <h3>Estadísticas del Medidor</h3>
+        <div v-if="medidorSeleccionado">
+          <p><b>Nombre:</b> {{ medidorSeleccionado.name }}</p>
+          <p><b>Estado:</b> {{ medidorSeleccionado.estado }}</p>
+          <canvas ref="lineChart" class="estadistica"></canvas>
+        </div>
+        <p v-else>Seleccione un medidor en el mapa para ver estadísticas.</p>
       </div>
-      <div class="chart-container">
-        <canvas ref="barChart" class="estadistica"></canvas>
+      <div class="filtrar"></div>
+      <div class="map-panel">
+        <h3>Ubicación del Medidor</h3>
+
+        <div class="search-container">
+          <input
+            type="number"
+            v-model="medidorId"
+            placeholder="ID del medidor"
+          />
+          <button @click="buscarMedidor">Buscar</button>
+        </div>
+
+        <div id="map"></div>
       </div>
     </div>
-
-    <h3 class="h3">Ubicación del Medidor</h3>
-
-    <div class="search-container">
-      <input type="number" id="medidorId" placeholder="ID del medidor" />
-      <button id="buscarMedidor">Buscar Medidor</button>
-    </div>
-
-    <div id="map"></div>
-    <!-- Mapa interactivo -->
   </div>
 </template>
 
@@ -78,188 +84,127 @@ export default {
   },
   data() {
     return {
-      username: "Usuario",
       totalMedidores: 120,
       totalClientes: 300,
       totalAlertas: 25,
       totalUsuarios: 50,
-      lineChart: null,
-      barChart: null,
+      medidores: [],
+      medidorSeleccionado: null,
+      medidorId: "",
       map: null,
       markersLayer: null,
-      medidores: [
-        {
-          id: 1,
-          name: "Medidor A",
-          lat: -1.8312,
-          lng: -78.1834,
-          estado: "activo",
-        },
-        {
-          id: 2,
-          name: "Medidor B",
-          lat: -2.1503,
-          lng: -79.8836,
-          estado: "inactivo",
-        },
-        {
-          id: 3,
-          name: "Medidor C",
-          lat: -0.1807,
-          lng: -78.4678,
-          estado: "activo",
-        },
-      ],
+      lineChart: null,
     };
   },
   methods: {
-    fetchData() {
-      this.createLineChart();
-      this.createBarChart();
-    },
-    createLineChart() {
-      const ctx = this.$refs.lineChart.getContext("2d");
-      if (this.lineChart) this.lineChart.destroy();
+    async cargarDatosExternos() {
+      try {
+        const response = await fetch("/data/medidores.json");
+        const data = await response.json();
 
-      this.lineChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: [
-            "Enero",
-            "Febrero",
-            "Marzo",
-            "Abril",
-            "Mayo",
-            "Junio",
-            "Julio",
-          ],
-          datasets: [
-            {
-              label: "Consumo de Agua",
-              data: [200, 150, 250, 300, 100, 400, 350],
-              borderColor: "#007bff",
-              backgroundColor: "rgba(0, 123, 255, 0.1)",
-              fill: true,
-            },
-          ],
-        },
-        options: { responsive: true, maintainAspectRatio: false },
-      });
-    },
-    createBarChart() {
-      const ctx = this.$refs.barChart.getContext("2d");
-      if (this.barChart) this.barChart.destroy();
+        // Asegurar que se asigna correctamente el array
+        if (Array.isArray(data.medidores)) {
+          this.medidores = data.medidores;
+        } else {
+          console.error(
+            "Error: La estructura del JSON no contiene un array de medidores."
+          );
+        }
 
-      this.barChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: [
-            "Enero",
-            "Febrero",
-            "Marzo",
-            "Abril",
-            "Mayo",
-            "Junio",
-            "Julio",
-          ],
-          datasets: [
-            {
-              label: "Consumo de Agua (litros)",
-              data: [200, 150, 250, 300, 100, 400, 350],
-              backgroundColor: "rgba(75, 192, 192, 0.2)",
-              borderColor: "rgba(75, 192, 192, 1)",
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: { responsive: true, maintainAspectRatio: false },
-      });
+        console.log("Datos cargados correctamente:", this.medidores);
+
+        // Una vez cargados los datos, agregamos los marcadores
+        this.agregarMarcadores();
+      } catch (error) {
+        console.error("Error al cargar los datos", error);
+      }
     },
     initMap() {
       this.map = L.map("map").setView([-1.8312, -78.1834], 6);
-
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: "© OpenStreetMap",
       }).addTo(this.map);
 
       this.markersLayer = L.markerClusterGroup();
-      this.addMarkers();
-
+      this.agregarMarcadores();
       this.map.addLayer(this.markersLayer);
-
-      document.getElementById("buscarMedidor").addEventListener("click", () => {
-        this.buscarMedidor();
-      });
     },
+    agregarMarcadores() {
+      if (!Array.isArray(this.medidores)) {
+        console.error("Error: this.medidores no es un array");
+        return;
+      }
 
-    addMarkers() {
-      const iconActivo = L.icon({
-        iconUrl: "activo-icon.png",
-        iconSize: [32, 32],
-      });
-
-      const iconInactivo = L.icon({
-        iconUrl: "inactivo-icon.png",
-        iconSize: [32, 32],
-      });
+      this.markersLayer.clearLayers(); // Limpiar los marcadores previos
 
       this.medidores.forEach((medidor) => {
-        const marker = L.marker([medidor.lat, medidor.lng], {
-          icon: medidor.estado === "activo" ? iconActivo : iconInactivo,
+        const marker = L.marker([medidor.lat, medidor.lng]).bindPopup(`
+      <b>${medidor.name}</b><br>
+      Estado: ${medidor.estado}<br>
+      <a href="/dashboard/medidor">Ir a Medidores</a>
+    `);
+
+        marker.on("click", () => {
+          this.mostrarEstadisticas(medidor.id); // 🔥 ACTUALIZAR ESTADÍSTICAS AL CLICKEAR UN MEDIDOR
         });
 
-        const popupContent = `
-        <b>${medidor.name}</b><br>
-        Estado: ${medidor.estado}<br>
-        <a href="/dashboard/medidor" class="ver-detalle" data-id="${medidor.id}">Ver Detalle</a>
-      `;
-
-        marker.bindPopup(popupContent);
         this.markersLayer.addLayer(marker);
       });
 
-      // Manejar clics en enlaces dentro de los popups
-      this.map.on("popupopen", (e) => {
-        const link = e.popup._contentNode.querySelector(".ver-detalle");
-        if (link) {
-          link.addEventListener("click", (event) => {
-            event.preventDefault();
-            const medidorId = link.getAttribute("data-id");
-            this.verDetalleMedidor(medidorId);
-          });
-        }
-      });
+      this.map.addLayer(this.markersLayer);
     },
 
     buscarMedidor() {
-      const medidorId = parseInt(document.getElementById("medidorId").value);
-      const medidor = this.medidores.find((m) => m.id === medidorId);
-
+      const medidor = this.medidores.find((m) => m.id == this.medidorId);
       if (medidor) {
         this.map.setView([medidor.lat, medidor.lng], 14);
-        L.popup()
-          .setLatLng([medidor.lat, medidor.lng])
-          .setContent(
-            `
-          <b>${medidor.name}</b><br>
-          Estado: ${medidor.estado}<br>
-          <a href="/dashboard/medidor" class="ver-detalle" data-id="${medidor.id}">Ver Detalle</a>
-        `
-          )
-          .openOn(this.map);
+        this.mostrarEstadisticas(medidor.id);
       } else {
         alert("Medidor no encontrado");
       }
     },
+    mostrarEstadisticas(medidorId) {
+      this.medidorSeleccionado = this.medidores.find((m) => m.id == medidorId);
+      if (this.medidorSeleccionado) {
+        this.$nextTick(() => {
+          // 🔥 ESPERAR QUE VUE ACTUALICE EL DOM
+          this.actualizarGrafico();
+        });
+      }
+    },
+    actualizarGrafico() {
+      if (!this.medidorSeleccionado) return;
 
-    verDetalleMedidor(medidorId) {
-      this.$router.push({ path: `dashboard/medidor` });
+      this.$nextTick(() => {
+        // 🔥 ASEGURAR QUE EL CANVAS ESTÁ DISPONIBLE
+        const ctx = this.$refs.lineChart.getContext("2d");
+        if (this.lineChart) {
+          this.lineChart.destroy(); // 🔥 ELIMINAR EL GRÁFICO ANTERIOR
+        }
+
+        this.lineChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul"],
+            datasets: [
+              {
+                label: "Consumo de Agua",
+                data: this.medidorSeleccionado.consumo, // 🔥 USAR LOS DATOS DEL MEDIDOR SELECCIONADO
+                borderColor: "#007bff",
+                backgroundColor: "rgba(0, 123, 255, 0.1)",
+                fill: true,
+              },
+            ],
+          },
+          options: { responsive: true, maintainAspectRatio: false },
+        });
+      });
     },
   },
   mounted() {
-    this.fetchData();
     this.initMap();
+    this.cargarDatosExternos(); // Cargar JSON al iniciar
   },
 };
 </script>
@@ -334,9 +279,88 @@ export default {
   color: white; /* Color del texto al pasar el cursor */
 }
 
-.statistics-title {
+/* estadisticas e interaccion con el mapa */
+/* Contenedor principal de estadísticas y mapa */
+.statics-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Panel de estadísticas */
+.stats-panel {
+  flex: 1;
+  min-width: 350px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo del título */
+.statistics-title,
+.stats-panel h3,
+.map-panel h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Estilos del gráfico */
+.estadistica {
+  width: 100%;
+  height: 300px !important;
+}
+
+/* Panel del mapa */
+.map-panel {
+  flex: 1;
+  min-width: 350px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de búsqueda */
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.search-container input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.search-container button {
+  padding: 8px 15px;
+  background: #007bff;
   color: white;
-  animation: fadeInUp 1s ease-out;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.search-container button:hover {
+  background: #0056b3;
+}
+
+/* Estilo del mapa */
+#map {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
 }
 
 /* Media Queries para pantallas más pequeñas */
@@ -356,94 +380,6 @@ export default {
   .card-container > * {
     flex: 1 1 100%;
   } /* Una columna en móviles */
-}
-
-/* Gráficas */
-.charts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 30px;
-  margin: 30px 0;
-}
-
-.chart-container {
-  flex: 1;
-  min-width: 300px;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeInUp 1s ease-out;
-}
-
-.estadistica {
-  height: 250px;
-  width: 100%;
-}
-
-/* Mapa */
-#map {
-  width: 100%;
-  max-width: 900px;
-  height: 500px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  margin-top: 20px;
-  animation: fadeInUp 1s ease-out;
-}
-
-/* Contenedor del buscador */
-.search-container {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-  animation: fadeInUp 1s ease-out;
-}
-
-/* Campo de entrada */
-#medidorId {
-  padding: 10px;
-  border: 2px solid #007bff;
-  border-radius: 5px;
-  font-size: 16px;
-  width: 200px;
-  outline: none;
-}
-
-/* Efecto de enfoque */
-#medidorId:focus {
-  border-color: #0056b3;
-}
-
-/* Botón de búsqueda */
-#buscarMedidor {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-/* Efecto hover */
-#buscarMedidor:hover {
-  background-color: #0056b3;
-}
-
-.h3 {
-  color: white;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  animation: fadeInUp 1s ease-out;
 }
 
 /* Animaciones */

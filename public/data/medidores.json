@@ -1,0 +1,28 @@
+{
+  "medidores": [
+    {
+      "id": 1,
+      "name": "Medidor A",
+      "lat": -1.8312,
+      "lng": -78.1834,
+      "estado": "activo",
+      "consumo": [200, 150, 250, 300, 100, 400, 350]
+    },
+    {
+      "id": 2,
+      "name": "Medidor B",
+      "lat": -2.1503,
+      "lng": -79.8836,
+      "estado": "inactivo",
+      "consumo": [180, 130, 220, 290, 90, 380, 320]
+    },
+    {
+      "id": 3,
+      "name": "Medidor B",
+      "lat": -2.1503,
+      "lng": -78.8836,
+      "estado": "inactivo",
+      "consumo": [180, 130, 220, 290, 90, 380, 320]
+    }
+  ]
+}

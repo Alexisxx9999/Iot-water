@@ -130,30 +130,6 @@
 }
 
 /* Gráficas */
-.charts {
-  display: flex;
-  flex-wrap: nowrap; /* No permitir que se envuelvan */
-  justify-content: space-between; /* Espacio entre gráficas */
-  gap: 30px;
-  margin: 30px 0;
-}
-
-.chart-container {
-  flex: 1; /* Permite que las gráficas ocupen el mismo espacio */
-  min-width: 300px; /* Ancho mínimo para evitar que se aplasten */
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex; /* Asegúrate de que el contenedor sea flex */
-  align-items: center; /* Centra el contenido verticalmente */
-  justify-content: center; /* Centra el contenido horizontalmente */
-}
-
-.estadistica {
-  height: 250px; /* Asegúrate de que los gráficos tengan suficiente altura */
-  width: 100%; /* Asegúrate de que los gráficos ocupen el ancho completo del contenedor */
-}
 
 @media (max-width: 768px) {
   .charts {
@@ -167,13 +143,6 @@
 }
 
 /* Mapa */
-.map {
-  height: 400px;
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-top: 20px;
-}
 
 h3 {
   color: white;
