@@ -69,6 +69,7 @@
 <script>
 import Card from "../components/Card.vue";
 import { Chart, registerables } from "chart.js";
+import "@fortawesome/fontawesome-free/css/all.css";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/leaflet.markercluster.js";
@@ -139,22 +140,40 @@ export default {
       this.markersLayer.clearLayers(); // Limpiar los marcadores previos
 
       this.medidores.forEach((medidor) => {
-        const marker = L.marker([medidor.lat, medidor.lng]).bindPopup(`
+        // Determinar color según estado
+        let colorClass = "text-primary"; // Azul por defecto
+
+        if (medidor.estado === "activo") {
+          colorClass = "text-success"; // Verde
+        } else if (medidor.estado === "inactivo") {
+          colorClass = "text-danger"; // Rojo
+        } else if (medidor.estado === "mantenimiento") {
+          colorClass = "text-warning"; // Amarillo
+        }
+
+        // Crear el ícono con FontAwesome dentro de un div
+        const customIcon = L.divIcon({
+          html: '<i class="fas fa-map-marker-alt fa-2x" style="color: red;"></i>', // Asegúrate de incluir `fa-2x` o más grande
+          className: "custom-fa-icon", // Clase opcional para más estilos
+          iconSize: [30, 42], // Ajusta el tamaño si es necesario
+          iconAnchor: [15, 42], // Ajusta el punto de anclaje
+          popupAnchor: [0, -42], // Ajusta la posición del popup
+        });
+
+        // Crear el marcador con el icono personalizado
+        const marker = L.marker([medidor.lat, medidor.lng], {
+          icon: customIcon,
+        }).bindPopup(`
       <b>${medidor.name}</b><br>
       Estado: ${medidor.estado}<br>
-      <a href="/dashboard/medidor">Ir a Medidores</a>
+      <button onclick="alert('Ver detalle de ${medidor.name}')">Ver Detalle</button>
     `);
-
-        marker.on("click", () => {
-          this.mostrarEstadisticas(medidor.id); // 🔥 ACTUALIZAR ESTADÍSTICAS AL CLICKEAR UN MEDIDOR
-        });
 
         this.markersLayer.addLayer(marker);
       });
 
       this.map.addLayer(this.markersLayer);
     },
-
     buscarMedidor() {
       const medidor = this.medidores.find((m) => m.id == this.medidorId);
       if (medidor) {
@@ -361,6 +380,30 @@ export default {
   height: 300px;
   border-radius: 12px;
   border: 1px solid #ddd;
+}
+
+/* iconos del mapa */
+.custom-marker-icon {
+  font-size: 30px; /* Tamaño del ícono */
+  text-align: center;
+  line-height: 30px;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3)); /* Efecto de sombra */
+}
+
+.text-primary {
+  color: #007bff; /* Azul */
+}
+
+.text-success {
+  color: #28a745; /* Verde */
+}
+
+.text-danger {
+  color: #dc3545; /* Rojo */
+}
+
+.text-warning {
+  color: #ffc107; /* Amarillo */
 }
 
 /* Media Queries para pantallas más pequeñas */
