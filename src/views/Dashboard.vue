@@ -166,7 +166,7 @@ export default {
         }).bindPopup(`
       <b>${medidor.name}</b><br>
       Estado: ${medidor.estado}<br>
-      <button onclick="alert('Ver detalle de ${medidor.name}')">Ver Detalle</button>
+         <a href="/dashboard/medidor">Ir a Medidores</a>
     `);
 
         this.markersLayer.addLayer(marker);
